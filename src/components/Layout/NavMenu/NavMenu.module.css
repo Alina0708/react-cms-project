@@ -1,0 +1,38 @@
+.navMenu {
+    grid-area: navMenu;
+    background-color: #f9d1c9;
+    margin-top: 10px;
+    padding-top: 15px;
+    padding-bottom: 10px;
+    position: relative;
+    width: 250px;
+  }
+  
+  .item {
+    color: azure;
+    -webkit-text-stroke: 0.5px black;
+    text-decoration: none;
+    margin-left: 30px;
+    font-size: 28px;
+  }
+  
+  .item img {
+    padding-right: 10px;
+    height: 25px;
+    width: 25px;
+  }
+  
+  .activeLink {
+    color: blueviolet;
+    -webkit-text-stroke: 0.5px black;
+    text-decoration: none;
+    margin-left: 40px;
+    font-size: 28px;
+  }
+  
+  .activeLink img {
+    padding-right: 10px;
+    height: 25px;
+    width: 25px;
+  }
+  
