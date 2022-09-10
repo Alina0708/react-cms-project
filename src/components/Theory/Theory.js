@@ -2,7 +2,7 @@ import classes from '../Theory/Theory.module.css';
 
 const Theory = () => {
   console.log('theory');
-  return <div>Theory</div>;
+  return(<section>Theory</section>);
 };
 
 export default Theory;

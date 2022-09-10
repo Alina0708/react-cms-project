@@ -1,0 +1,47 @@
+.profile {
+  display: flex;
+  margin-top: 5%;
+  margin-left: 35px;
+  justify-content: center;
+}
+
+.contact{
+    width: 250px;  
+}
+.contact p{
+    margin-top:20%;
+}
+.aboutMe {
+  margin-top: 60px;
+  width: 250px;
+  height: 40px;
+  background-color: #c290f0;
+  display: flex;
+  align-items: center;
+  padding-left: 20px;
+}
+
+.foto {
+  background: #000;
+  width: 320px;
+  height: 280px;
+  padding-bottom: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 50px;
+}
+
+.foto img {
+  height: 300px;
+  width: 172.23px;
+  position: absolute;
+  top: 13%;
+}
+
+.foto p {
+  position: absolute;
+  top: 63%;
+  color: white;
+}
+
