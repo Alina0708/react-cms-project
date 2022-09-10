@@ -6,6 +6,7 @@ import Structure from './components/Structure/Structure';
 import Simulator from './components/Simulator/Simulator';
 import Home from './components/Home/Home';
 import Layout from './components/Layout/Layout';
+import Contacts from './components/Contacts/Contacts';
 
 function App() {
   return (
@@ -16,6 +17,8 @@ function App() {
           <Route path="theory" element={<Theory />} />
           <Route path="structure" element={<Structure />} />
           <Route path="simulator" element={<Simulator />} />
+          <Route path="home" element={<Home />} />
+          <Route path="contacts" element={<Contacts />} />
         </Route>
       </Routes>
     </BrowserRouter>

@@ -1,47 +1,12 @@
-.appwrapper {
-  /* margin: 5px 5em; */
-  display: grid;
-  grid-template-rows: minmax(70px avto);
-  grid-template-columns: 1fr 2fr 9fr 1fr;
-  grid-template-areas:
-    'column1 header header column2'
-    'column1 navMenu content column2';
+p {
+  margin: 0;
+  text-indent: 20px;
 }
 
-.content {
-  /*содержимое страницы */
-  margin-top: 10px;
-  grid-area: content;
-  margin-left: 10px;
-  background-color: #f7f4cb;
+h4 {
+  margin: 0;
 }
 
-.column2 {
-  background-image: url(./image/backgraund1.jpg);
-  opacity: 0.2;
-  grid-area: column2;
-  margin-right: 5px;
-  margin-left: 5px;
-}
-.column1 {
-  background-image: url(./image/backgraund1.jpg);
-  opacity: 0.2;
-  grid-area: column1;
-  margin-right: 5px;
-  margin-left: 5px;
-}
-
-/* .navMenu {
-  grid-area: navMenu;
-  background-color: #f9d1c9;
-  margin-top: 10px;
-  padding-top: 15px;
-  padding-bottom: 10px;
-  position: relative;
-  width: 250px;
-} */
-
-.headerPage {
-  grid-area: header;
-  background-color: #a672d3;
+Link{
+font-family: Verdana, Geneva, Tahoma, sans-serif;
 }

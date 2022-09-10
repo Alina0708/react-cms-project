@@ -1,0 +1,23 @@
+.headerPage {
+  background-color: white;
+  padding-bottom: 10px;
+  padding-top: 5px;
+  border-bottom: 1px grey solid;
+  text-align: center;
+}
+
+.item {
+  color: black;
+  -webkit-text-stroke: 0.2px black;
+  text-decoration: none;
+  margin-left: 30px;
+  font-size: 16px;
+}
+
+.activeLink {
+  color: #9f3dfd;
+  -webkit-text-stroke: 0.2px black;
+  text-decoration: none;
+  margin-left: 30px;
+  font-size: 16px;
+}

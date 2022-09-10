@@ -1,13 +1,14 @@
 import { Outlet } from 'react-router-dom';
 
+
+import classes from '../Layout/Layout.module.css';
+import Header from './Header/Header';
+
 const Layout = () => {
   return (
-    <div>
-      {console.log('hello')}
-      {/* layout */}
-      {/* <Header /> */}
-      {/* <NavMenu /> */}
-      <div className="main" style={{ marginTop: '100px' }}>
+    <div className={classes.appwrapper}>
+      <Header />
+      <div className={classes.content}>
         <Outlet />
       </div>
     </div>

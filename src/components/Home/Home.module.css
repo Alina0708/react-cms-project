@@ -1,0 +1,8 @@
+.term {
+  height: 200px;
+  background: linear-gradient(to top, #fefcea, #9f3dfd);
+}
+
+.term p {
+  text-align: center;
+}
