@@ -4,7 +4,7 @@ import classes from '../Header/Header.module.css';
 
 const Header = () => {
   return (
-    <section className={classes.headerPage}>
+    <header>
       <nav className={classes.navMenu}>
         <NavLink to="/Home" className={(navData) => (navData.isActive ? classes.activeLink : classes.item)}>
           Главная
@@ -26,7 +26,7 @@ const Header = () => {
           Контакты
         </NavLink>
       </nav>
-    </section>
+    </header>
   );
 };
 

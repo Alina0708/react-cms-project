@@ -1,6 +1,5 @@
 import { Outlet } from 'react-router-dom';
 
-
 import classes from '../Layout/Layout.module.css';
 import Header from './Header/Header';
 

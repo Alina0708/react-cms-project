@@ -1,15 +1,17 @@
 .profile {
+  margin-top: 30px;
+}
+
+.aboutMe__container {
   display: flex;
-  margin-top: 5%;
-  margin-left: 35px;
   justify-content: center;
 }
 
-.contact{
-    width: 250px;  
+.contact {
+  width: 250px;
 }
-.contact p{
-    margin-top:20%;
+.contact p {
+  margin-top: 20%;
 }
 .aboutMe {
   margin-top: 60px;
@@ -34,14 +36,31 @@
 
 .foto img {
   height: 300px;
-  width: 172.23px;
+  width: 172px;
   position: absolute;
-  top: 13%;
+  top: 11%;
+}
+
+.foto img:hover {
+  cursor: pointer;
+  transform: scale(1.2);
+}
+
+.foto img:hover ~ p {
+  color: black;
+  font-weight: 600;
+  background-color: white;
 }
 
 .foto p {
   position: absolute;
-  top: 63%;
+  top: 350px;
   color: white;
 }
 
+.number {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  color: grey;
+}

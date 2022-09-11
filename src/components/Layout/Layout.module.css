@@ -1,14 +1,6 @@
-.appwrapper {
-  /* margin: 5px 5em; */
-  display: grid;
-  grid-template-rows: minmax(70px avto);
-  grid-template-columns: 10fr;
-  grid-template-areas:
-    'header'
-    'content';
-}
-
 .content {
-  /*содержимое страницы */
-  grid-area: content;
+  position: absolute;
+  top: 60px;
+  width: 100%;
+  max-width: 1600px;
 }

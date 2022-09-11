@@ -1,0 +1,94 @@
+.formule {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  height: 25px;
+}
+
+.theory img {
+  height: 25px;
+}
+
+h1,
+h3 {
+  display: flex;
+  justify-content: center;
+  color: #8241be;
+  /* margin-bottom: 1vw; */
+}
+h1{
+  margin-top: 0;
+}
+h3 {
+  margin-top: 10px;
+}
+
+.numberingFormule {
+  color: grey;
+}
+
+.decoding {
+  color: #9f3dfd;
+  width: 2px;
+}
+
+.theory span {
+  text-indent: 0px;
+}
+
+.theory .w_i {
+  height: 15px;
+}
+
+.theory p {
+  text-indent: 20px;
+  text-align: justify;
+}
+li::marker {
+  color: #9f3dfd;
+}
+
+.definition {
+  color: #9f3dfd;
+}
+
+.scientist{
+  margin-top: 30px;
+  margin-bottom: 30px;
+  width: 220px;
+  height: 225px;
+  background-color: black;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-left: 50px;
+}
+
+.scientist img:hover{
+  cursor: pointer;
+  transform: scale(1.2);
+}
+
+.scientist img:hover ~ em {
+  margin-top: 30px;
+  color: black;
+  font-weight: 600;
+  background-color: #9f3dfd;
+}
+
+.scientists{
+  display: flex;
+  justify-content: center;
+}
+
+.scientists em{
+  color:white;
+}
+
+.scientist img{
+  width: 140px;
+  height:200px;
+
+}
