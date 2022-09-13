@@ -1,4 +1,7 @@
+import { useState } from 'react';
 import classes from '../Theory/Theory.module.css';
+import ReactTooltip from 'react-tooltip';
+
 import W from '../../image/formula_W.png';
 import T from '../../image/formula_T.png';
 import E from '../../image/formula_E.png';
@@ -13,7 +16,10 @@ import lenz from '../../image/lenz.jpg';
 import om from '../../image/Ohm.jpg';
 
 const Theory = () => {
-  console.log('theory');
+  const [tooltip, showTooltip] = useState(true);
+
+  const [tooltipImg, showTooltipImg] = useState(true);
+
   return (
     <section className={classes.theory}>
       <h1 className={classes.titleSticky}>ВНУТРЕННЯЯ ЭНЕРГИЯ И РАБОТА ЭЛЕКТРИЧЕСКОГО ТОКА</h1>
@@ -24,8 +30,26 @@ const Theory = () => {
       </p>
       <p>
         Электрическую энергию можно получать из других видов энергии и преобразовывать в другие виды энергии. Для нее
-        справедлив закон сохранения энергии. В проводнике носители заряда движутся под действием электрического поля, а
-        при переносе заряда совершается работа.
+        справедлив{' '}
+        <span
+          className={classes['link-tooltip']}
+          data-tip="energy"
+          data-for="energy"
+          onMouseEnter={() => showTooltip(true)}
+          onMouseLeave={() => {
+            showTooltip(false);
+            setTimeout(() => showTooltip(true), 50);
+          }}
+        >
+          закон сохранения энергии
+        </span>
+        {tooltip && (
+          <ReactTooltip id="energy" place="bottom" type="dark" effect="float">
+            <span>E = Ep + Ek = const</span>
+          </ReactTooltip>
+        )}
+        . В проводнике носители заряда движутся под действием электрического поля, а при переносе заряда совершается
+        работа.
       </p>
       <p>Если:</p>
       <p>
@@ -145,11 +169,29 @@ const Theory = () => {
         тока. Установлен в 1841 году Джеймсом Джоулем и независимо от него в 1842 году Эмилием Ленцем.
       </p>
       <p>
-        Джеймс Пре́скотт Джо́уль (англ. James Prescott Joule; 24 декабря 1818, Солфорд, Ланкашир, Англия, Великобритания —
-        11 октября 1889, Сэйл, Чешир, Англия, Великобритания) — английский физик, внёсший значительный вклад в
-        становление термодинамики. Обосновал на опытах закон сохранения энергии. Установил закон, определяющий тепловое
-        действие электрического тока. Вычислил скорость движения молекул газа и установил её зависимость от температуры.
+         
+        <span
+          className={classes['link-tooltip']}
+          data-tip="Joul"
+          data-for="Joul"
+          onMouseEnter={() => showTooltipImg(true)}
+          onMouseLeave={() => {
+            showTooltipImg(false);
+            setTimeout(() => showTooltipImg(true), 50);
+          }}
+        >
+          Джеймс Пре́скотт Джо́уль
+        </span>{' '}
+        (англ. James Prescott Joule; 24 декабря 1818, Солфорд, Ланкашир, Англия, Великобритания — 11 октября 1889, Сэйл,
+        Чешир, Англия, Великобритания) — английский физик, внёсший значительный вклад в становление термодинамики.
+        Обосновал на опытах закон сохранения энергии. Установил закон, определяющий тепловое действие электрического
+        тока. Вычислил скорость движения молекул газа и установил её зависимость от температуры.
       </p>
+      {tooltipImg && (
+        <ReactTooltip id="Joul" place="bottom" type="dark" effect="float">
+          <img className={classes['joule-tooltip']} alt="joule" src={joule} />
+        </ReactTooltip>
+      )}
       <p>
         Эмилий Христианович Ленц (при рождении Генрих Фридрих Эмиль Ленц, нем. Heinrich Friedrich Emil Lenz; 12 (24)
         февраля 1804, Дерпт — 29 января (10 февраля) 1865[4], Рим) — российский физик немецкого происхождения. Выходец

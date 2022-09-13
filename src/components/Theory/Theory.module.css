@@ -7,7 +7,7 @@
   height: 25px;
 }
 
-.formule img:hover{
+.formule img:hover {
   transform: scale(1.5);
 }
 
@@ -110,4 +110,13 @@ li::marker {
   top: 60px;
   background: white;
   z-index: 1;
+}
+
+.link-tooltip {
+  cursor: pointer;
+  color: #0645ad;
+}
+
+.theory .joule-tooltip {
+  height: 14rem;
 }
