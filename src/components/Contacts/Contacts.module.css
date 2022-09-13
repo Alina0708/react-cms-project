@@ -39,11 +39,13 @@
   width: 172px;
   position: absolute;
   top: 11%;
+  transition: transform 500ms;
 }
 
 .foto img:hover {
   cursor: pointer;
   transform: scale(1.2);
+  /* transform: translateY(-10px); */
 }
 
 .foto img:hover ~ p {
@@ -63,4 +65,21 @@
   flex-direction: column;
   margin-top: 20px;
   color: grey;
+}
+
+.communication-methods {
+  margin-bottom: 1rem;
+}
+
+.icon {
+  height: 24px;
+}
+
+.icon:first-child {
+  padding-right: 1rem;
+}
+
+.icon-container {
+  display: flex;
+  justify-content: center;
 }
