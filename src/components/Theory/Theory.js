@@ -67,19 +67,25 @@ const Theory = () => {
       </div>
       <p>
         При подстановки закона ома &nbsp;
-        <img alt="Oma" src={Oma} className={classes.omaW} />
-        <span className={classes.numberingFormule}>(4)</span>
+        <div className={classes.formule}>
+          <img alt="Oma" src={Oma} className={classes.omaW} />
+          <span className={classes.numberingFormule}>(4)</span>
+        </div>
       </p>
       <p>
         в формулу (3) закона Джоуля — Ленца мы получим работу электрического тока через напряжение и сопротивление:
         &nbsp;
-        <img alt="W_u2" src={W_u2} className={classes.omaW} />
-        <span className={classes.numberingFormule}>(5),</span>
+        <div className={classes.formule}>
+          <img alt="W_u2" src={W_u2} className={classes.omaW} />
+          <span className={classes.numberingFormule}>(5),</span>
+        </div>
       </p>
       <p>
         работа электрического тока через ток и сопротивление:
-        <img alt="w_i" src={w_i} className={classes.w_i} />
-        <span className={classes.numberingFormule}>(6)</span>
+        <div className={classes.formule}>
+          <img alt="w_i" src={w_i} className={classes.w_i} />
+          <span className={classes.numberingFormule}>(6)</span>
+        </div>
       </p>
       <p>Единицей работы СИ является джоуль (Дж).</p>
       <h3>Tеплота при изменении температуры</h3>
