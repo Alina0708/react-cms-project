@@ -1,5 +1,10 @@
 import classes from '../Contacts/Contacts.module.css';
+
 import avatar from '../../image/foto4.jpg';
+import telegramIcon from '../../image/icons/telegramIcon.png';
+import githubIcon from '../../image/icons/githubIcon.png';
+import phoneIcon from '../../image/icons/phoneIcon.png';
+import emailIcon from '../../image/icons/emailIcon.png';
 
 const Contacts = () => {
   return (
@@ -20,9 +25,29 @@ const Contacts = () => {
         </div>
       </div>
       <div className={classes.number}>
-        <p>Вы можете связаться со мной по номеру +3752952698##</p>
-        <p>github - https://github.com/Alina0708/react-cms-project.git</p>
-        <p>telegram - https://t.me/alina_sevryuk</p>
+        <p className={classes['communication-methods']}>Вы можете связаться со мной</p>
+        <div className={classes['icon-container']}>
+          <div>
+            <a href="tel:375295269874">
+              <img className={classes.icon} src={phoneIcon} alt="telegram" />
+            </a>
+          </div>
+          <div>
+            <a href="mailto:alina.sevryuk0708@gmail.com">
+              <img className={classes.icon} src={emailIcon} alt="telegram" />
+            </a>
+          </div>
+          <div>
+            <a href="https://github.com/Alina0708/react-cms-project.git" target="_blank">
+              <img className={classes.icon} src={githubIcon} alt="github" />
+            </a>
+          </div>
+          <div>
+            <a href="https://t.me/alina_sevryuk" target="_blank">
+              <img className={classes.icon} src={telegramIcon} alt="telegram" />
+            </a>
+          </div>
+        </div>
       </div>
     </section>
   );
