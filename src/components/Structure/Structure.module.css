@@ -2,6 +2,7 @@
 .fotoInstallation {
   flex-direction: column;
   text-align: center;
+  margin-top: 20px;
   margin-bottom: 20px;
 }
 .fotoInstallation img {
@@ -24,5 +25,36 @@
 } 
 
 .compound{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-left: 80px;
+}
 
+/* .fotoInstallation img:hover ~ .em{
+  margin-left: 100px;
+}  */
+
+.componentInstallaion{
+  display: flex;
+  text-indent: 30px;
+  text-align: justify;
+  align-items: center;
+}
+
+.sizeImage{
+  height: 400px;
+}
+
+.multimetr{
+  display: flex;
+  flex-direction: column;
+  margin-left: 120px;
+}
+
+.titleSticky {
+  position: sticky;
+  top: 60px;
+  background: white;
+  z-index: 1;
 }

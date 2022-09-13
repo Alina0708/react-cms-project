@@ -19,7 +19,11 @@ const Contacts = () => {
           <p>Севрюк Алина</p>
         </div>
       </div>
-      <div className={classes.number}>Вы можете связаться со мной по номеру ###########</div>
+      <div className={classes.number}>
+        <p>Вы можете связаться со мной по номеру +3752952698##</p>
+        <p>github - https://github.com/Alina0708/react-cms-project.git</p>
+        <p>telegram - https://t.me/alina_sevryuk</p>
+      </div>
     </section>
   );
 };

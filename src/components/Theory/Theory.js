@@ -16,7 +16,7 @@ const Theory = () => {
   console.log('theory');
   return (
     <section className={classes.theory}>
-      <h1>ВНУТРЕННЯЯ ЭНЕРГИЯ И РАБОТА ЭЛЕКТРИЧЕСКОГО ТОКА</h1>
+      <h1 className={classes.titleSticky}>ВНУТРЕННЯЯ ЭНЕРГИЯ И РАБОТА ЭЛЕКТРИЧЕСКОГО ТОКА</h1>
       <p className={classes.indent}>
         <span className={classes.definition}>Электрическая энергия (электроэнергия)</span>- способность
         электромагнитного поля совершать работу под действием приложенного напряжения в технологическом процессе её
@@ -67,13 +67,13 @@ const Theory = () => {
       </div>
       <p>
         При подстановки закона ома &nbsp;
-        <img alt="Oma" src={Oma} className={classes.omaW}/>
+        <img alt="Oma" src={Oma} className={classes.omaW} />
         <span className={classes.numberingFormule}>(4)</span>
       </p>
       <p>
         в формулу (3) закона Джоуля — Ленца мы получим работу электрического тока через напряжение и сопротивление:
         &nbsp;
-        <img alt="W_u2" src={W_u2} className={classes.omaW}/>
+        <img alt="W_u2" src={W_u2} className={classes.omaW} />
         <span className={classes.numberingFormule}>(5),</span>
       </p>
       <p>
@@ -126,7 +126,7 @@ const Theory = () => {
         от температуры:
       </p>
       <div className={classes.formule}>
-        <img alt="T" src={T} className={classes.omaW}/>
+        <img alt="T" src={T} className={classes.omaW} />
         <span className={classes.numberingFormule}>(9)</span>
       </div>
       <p>

@@ -59,8 +59,8 @@
 }
 
 .number {
-  display: flex;
-  justify-content: center;
+  text-align: center;
+  flex-direction: column;
   margin-top: 20px;
   color: grey;
 }

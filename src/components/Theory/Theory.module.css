@@ -16,9 +16,11 @@ h3 {
   display: flex;
   justify-content: center;
   color: #8241be;
+  margin: 0;
+  padding-bottom: 1rem;
   /* margin-bottom: 1vw; */
 }
-h1{
+h1 {
   margin-top: 0;
 }
 h3 {
@@ -42,7 +44,7 @@ h3 {
   height: 20px;
 }
 
-.omaW{
+.omaW {
   height: 30px !important;
 }
 
@@ -58,7 +60,7 @@ li::marker {
   color: #9f3dfd;
 }
 
-.scientist{
+.scientist {
   margin-top: 30px;
   margin-bottom: 30px;
   width: 220px;
@@ -69,11 +71,11 @@ li::marker {
   flex-wrap: wrap;
 }
 
-.scientist:nth-child(2){
-margin-left: 50px;
+.scientist:nth-child(2) {
+  margin-left: 50px;
 }
 
-.scientist img:hover{
+.scientist img:hover {
   cursor: pointer;
   transform: scale(1.2);
 }
@@ -85,17 +87,23 @@ margin-left: 50px;
   background-color: #9f3dfd;
 }
 
-.scientists{
+.scientists {
   display: flex;
   justify-content: center;
 }
 
-.scientists em{
-  color:white;
+.scientists em {
+  color: white;
 }
 
-.scientist img{
+.scientist img {
   width: 140px;
-  height:200px;
+  height: 200px;
+}
 
+.titleSticky {
+  position: sticky;
+  top: 60px;
+  background: white;
+  z-index: 1;
 }

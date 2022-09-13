@@ -1,8 +1,23 @@
-.term {
-  height: 200px;
-  background: linear-gradient(to top, #fefcea, #9f3dfd);
-}
+/* .term {
+
+} */
 
 .term p {
   text-align: center;
+}
+
+.foneImage{
+  filter: alpha(Opacity=25); /* Полупрозрачность для IE */
+  opacity: 0.25; 
+  width: 100%;
+}
+
+.centered {
+  font-size: 28px;
+  color: rgb(96, 33, 155);
+  font-weight: 800;
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
