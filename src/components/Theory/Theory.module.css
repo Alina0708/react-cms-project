@@ -39,7 +39,11 @@ h3 {
 }
 
 .theory .w_i {
-  height: 15px;
+  height: 20px;
+}
+
+.omaW{
+  height: 30px !important;
 }
 
 .theory p {
@@ -63,7 +67,10 @@ li::marker {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
-  margin-left: 50px;
+}
+
+.scientist:nth-child(2){
+margin-left: 50px;
 }
 
 .scientist img:hover{
