@@ -15,8 +15,8 @@ section {
   padding: 3vw 4vw;
 }
 
-/* @media (max-width: 600) {
+@media (max-width: 600) {
   section{
-    padding: 3vw 2vw;
+    padding: 0vw 0vw;
   }
-} */
+}
