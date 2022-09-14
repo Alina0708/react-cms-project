@@ -7,7 +7,7 @@ const Modal = ({ children, setShow }) => {
         <div className={classes.close}>
           <img alt="close" src="https://cdn-icons-png.flaticon.com/512/70/70091.png" onClick={() => setShow(false)} />
         </div>
-        {children}
+        <div className={classes.childrens}>{children}</div>
       </div>
     </div>
   );

@@ -28,3 +28,12 @@ header {
   margin-left: 30px;
   font-size: 16px;
 }
+
+@media (max-width: 700px) {
+  .item {
+    margin-left: 9px;
+  }
+  .activeLink {
+    margin-left: 9px;
+  }
+}
