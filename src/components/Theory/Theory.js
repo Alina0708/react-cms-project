@@ -19,7 +19,6 @@ const Theory = () => {
   const [tooltip, showTooltip] = useState(true);
 
   const [tooltipImg, showTooltipImg] = useState(true);
-
   return (
     <section className={classes.theory}>
       <h1 className={classes.titleSticky}>ВНУТРЕННЯЯ ЭНЕРГИЯ И РАБОТА ЭЛЕКТРИЧЕСКОГО ТОКА</h1>

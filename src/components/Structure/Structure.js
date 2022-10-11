@@ -9,7 +9,6 @@ import power from '../../image/power.jpg';
 import copper from '../../image/copper.jpg';
 import time from '../../image/time.jpg';
 import aluminum from '../../image/aluminum.jpg';
-
 import Modal from '../Modal/Modal';
 
 const Structure = () => {
@@ -30,7 +29,6 @@ const Structure = () => {
     setDisplayImg({ ...displayImg, displayImgName: false });
   };
 
-  console.log('displayImgName', displayImgName);
   return (
     <section className={classes.structure}>
       <h1 className={classes.titleSticky}>Структура и описание установки</h1>
@@ -97,7 +95,7 @@ const Structure = () => {
       <h1>Источник питания</h1>
       <div className={classes.componentInstallaion}>
         <img alt="DC_Power_Supply" src={DC_Power_Supply} />
-        <p className={classes.power}>
+        <div className={classes.power}>
           Регулируемые импульсные источники питания с высокостабильными выходными характеристиками и ультранизкими
           пульсациями. Цифровая индикация выходных значений напряжения и тока. Оперативный сброс выхода в ноль. Защита
           от перегрузки, короткого замыкания, перегрева. Терморегулированная вентиляция. Минимальная дискретность
@@ -113,7 +111,7 @@ const Structure = () => {
           <p>Клеммы: безопасные гнезда 4 мм</p>
           <p>Размеры: прибл. 130x150x300 мм³</p>
           <p>Вес: прибл. 4,7 кг</p>
-        </p>
+        </div>
       </div>
       <h1>Мультиметр</h1>
       <div className={classes.componentInstallaion}>
@@ -137,6 +135,16 @@ const Structure = () => {
           <p>Рабочее напряжение: батарея 9 В</p>
           <p>Напряжение постоянного тока: 200 мВ − 600 В, 5 диапазонов, ±0,5% ± 2 разряда</p>
         </div>
+      </div>
+      <div>
+        <a href="map/test100.html" target="_blank">
+          Open new page with map
+        </a>
+      </div>
+      <div>
+        <a href="map/video_html.html" target="_blank">
+          Open new page with video
+        </a>
       </div>
     </section>
   );
