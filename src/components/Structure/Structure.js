@@ -137,11 +137,13 @@ const Structure = () => {
         </div>
       </div>
       <div>
+        Чтобы просмотреть карту установки, перейдите по ссылке
         <a href="map/test100.html" target="_blank">
           Open new page with map
         </a>
       </div>
       <div>
+        Чтобы просмотреть видео работы установки, перейдите по ссылке
         <a href="map/video_html.html" target="_blank">
           Open new page with video
         </a>
