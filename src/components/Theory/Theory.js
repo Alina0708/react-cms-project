@@ -1,9 +1,8 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Baseknow from './baseknow';
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 
 import classes from '../Theory/Theory.module.css';
-import classes1 from '../Theory/basestyle.module.css';
 import ReactTooltip from 'react-tooltip';
 
 import W from '../../image/formula_W.png';
@@ -18,12 +17,16 @@ import w_i from '../../image/w_i.png';
 import joule from '../../image/joule.jpg';
 import lenz from '../../image/lenz.jpg';
 import om from '../../image/Ohm.jpg';
+import classes1 from './basestyle.module.css';
 
 const Theory = () => {
   //--------------------------------------
   const [tooltip, showTooltip] = useState(true);
-
   const [tooltipImg, showTooltipImg] = useState(true);
+
+  useEffect(() => {
+    Baseknow();
+  }, []);
   return (
     <section className={classes.theory}>
       <h1 className={classes.titleSticky}>ВНУТРЕННЯЯ ЭНЕРГИЯ И РАБОТА ЭЛЕКТРИЧЕСКОГО ТОКА</h1>
@@ -225,21 +228,21 @@ const Theory = () => {
           <em>Георг Симон Ом</em>
         </div>
       </div>
-      <section class={classes1.dialog}>
-        <div class={classes1.dialog__window}>
-          <h4 class={classes1.dialog__header}>База знаний</h4>
-          <div class={classes1.dialog__body} id={classes1.dialog__messanger}></div>
-          <form class={classes1.dialog__submit} id={classes1.dialog__form} onsubmit="return false">
+      <section className={classes1.dialog}>
+        <div className={classes1.dialog__window}>
+          <h4 className={classes1.dialog__header}>База знаний</h4>
+          <div className={classes1.dialog__body} id="dialog__messanger"></div>
+          <form className={classes1.dialog__submit} id="dialog__form" onSubmit={() => false}>
             <input
-              class={classes1.dialog__input}
-              id={classes1.dialog__input}
+              className={classes1.dialog__input}
+              id="dialog__input"
               type="text"
               name="question"
               autocomplete="off"
               placeholder="Введите ваш вопрос"
             />
-            <button class={classes1.dialog__button} id={classes1.dialog__button} type="button">
-              <i class="fas fa-microphone"></i>
+            <button className={classes1.dialog__button} id="dialog__button" type="button">
+              <i className="fas fa-microphone"></i>
             </button>
           </form>
         </div>

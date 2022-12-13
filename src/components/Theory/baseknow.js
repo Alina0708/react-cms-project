@@ -2,14 +2,15 @@ import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognitio
 SpeechRecognition.startListening({ continuous: true });
 
 const Baseknow = () => {
-  let form = document.querySelector('#dialog__form');
-  let input = document.querySelector('#dialog__input');
-  let button = document.querySelector('#dialog__button');
-  let messanger = document.querySelector('#dialog__messanger');
+  let form = document.getElementById('dialog__form');
+  let input = document.getElementById('dialog__input');
+  let button = document.getElementById('dialog__button');
+  let messanger = document.getElementById('dialog__messanger');
 
   form.addEventListener('submit', handleForm);
 
-  function handleForm() {
+  function handleForm(e) {
+    e.preventDefault();
     if (input.value != '') {
       messanger.innerHTML += `<div class="dialog__message question">${input.value}</div>`;
       let [answer, photo] = getAnswer(input.value);
