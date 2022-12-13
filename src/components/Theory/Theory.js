@@ -1,5 +1,9 @@
 import { useState } from 'react';
+import Baseknow from './baseknow';
+import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
+
 import classes from '../Theory/Theory.module.css';
+import classes1 from '../Theory/basestyle.module.css';
 import ReactTooltip from 'react-tooltip';
 
 import W from '../../image/formula_W.png';
@@ -16,6 +20,7 @@ import lenz from '../../image/lenz.jpg';
 import om from '../../image/Ohm.jpg';
 
 const Theory = () => {
+  //--------------------------------------
   const [tooltip, showTooltip] = useState(true);
 
   const [tooltipImg, showTooltipImg] = useState(true);
@@ -220,8 +225,26 @@ const Theory = () => {
           <em>Георг Симон Ом</em>
         </div>
       </div>
+      <section class={classes1.dialog}>
+        <div class={classes1.dialog__window}>
+          <h4 class={classes1.dialog__header}>База знаний</h4>
+          <div class={classes1.dialog__body} id={classes1.dialog__messanger}></div>
+          <form class={classes1.dialog__submit} id={classes1.dialog__form} onsubmit="return false">
+            <input
+              class={classes1.dialog__input}
+              id={classes1.dialog__input}
+              type="text"
+              name="question"
+              autocomplete="off"
+              placeholder="Введите ваш вопрос"
+            />
+            <button class={classes1.dialog__button} id={classes1.dialog__button} type="button">
+              <i class="fas fa-microphone"></i>
+            </button>
+          </form>
+        </div>
+      </section>
     </section>
   );
 };
-
 export default Theory;

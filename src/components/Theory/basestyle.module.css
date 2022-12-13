@@ -1,0 +1,128 @@
+.dialog {
+  margin: 20px 0;
+  width: 60%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.dialog__window {
+  border-radius: 30px;
+  overflow: hidden;
+}
+
+.dialog__header {
+  padding: 15px;
+  text-align: center;
+  font-weight: 600;
+  background-color: #0c0c0c;
+  color: #fff;
+  font-family: 'Rubik', sans-serif;
+}
+
+.dialog__body {
+  height: 450px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  overflow: auto;
+  word-wrap: break-word;
+  scroll-behavior: smooth;
+}
+
+.dialog__submit {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  border-radius: 30px;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: row;
+  flex-direction: row;
+}
+
+.dialog__input {
+  width: 100%;
+  padding: 15px 25px;
+  background-color: #0c0c0c;
+  font-family: 'Rubik', sans-serif;
+  border: none;
+  outline: none;
+  color: #ffffff;
+  border-bottom: 2px solid #0c0c0c;
+  border-left: 2px solid #0c0c0c;
+  border-radius: 0px 0px 0px 0px;
+}
+
+.dialog__input::-ms-input-placeholder,
+.dialog__input::placeholder,
+.dialog__input:-ms-input-placeholder,
+.dialog__input::-webkit-input-placeholder {
+  color: rgb(255, 255, 255);
+  font-family: 'Rubik', sans-serif;
+}
+
+.dialog__button {
+  padding: 0 30px;
+  background-color: #0d8ba4;
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+  background-size: 10px;
+  border: 2px solid #0c0c0c;
+  color: #fff;
+  font-size: 2rem;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+}
+
+.dialog__button-hover {
+  padding: 0 40px;
+  background-color: #0c0c0c;
+  color: #979797;
+  font-size: 2.5rem;
+}
+
+.dialog__button-listen {
+  padding: 0 40px !important;
+  background-color: #ffffff !important;
+  color: #ff2d2d !important;
+  font-size: 2.5rem !important;
+}
+
+.dialog__message {
+  margin: 5px;
+  font-family: 'Rubik', sans-serif;
+  padding: 10px;
+  border-radius: 40px;
+  max-width: 60%;
+  text-align: justify;
+  -webkit-box-shadow: 4px 4px 8px 0px rgb(202, 202, 202);
+  box-shadow: 4px 4px 8px 0px rgb(202, 202, 202);
+}
+
+.dialog__message.question {
+  font-family: 'Rubik', sans-serif;
+  margin-left: auto;
+  border-top-right-radius: 0;
+  background-color: #0c0c0c;
+  color: #fff;
+}
+
+.dialog__message.answer {
+  margin-right: auto;
+  border-top-left-radius: 0;
+  background-color: #ffffff;
+}
+
+.dialog__image {
+  margin: 5px;
+  margin-right: auto;
+  border-radius: 20px;
+  -webkit-box-shadow: 4px 4px 8px 0px rgb(202, 202, 202);
+  box-shadow: 4px 4px 8px 0px rgb(202, 202, 202);
+  border-top-left-radius: 0;
+  width: 50%;
+}
