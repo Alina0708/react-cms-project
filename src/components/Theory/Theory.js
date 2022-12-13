@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react';
-import Baseknow from './baseknow';
-import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
+import { useState } from 'react';
+import { knowledge, endings, blacklist } from './baseknow';
+import SpeechRecognition from 'react-speech-recognition';
 
 import classes from '../Theory/Theory.module.css';
 import ReactTooltip from 'react-tooltip';
@@ -23,10 +23,179 @@ const Theory = () => {
   //--------------------------------------
   const [tooltip, showTooltip] = useState(true);
   const [tooltipImg, showTooltipImg] = useState(true);
+  const [messages, setMessages] = useState([]);
+  const [inputValue, setInputValue] = useState('');
 
-  useEffect(() => {
-    Baseknow();
-  }, []);
+  function handleForm(e) {
+    e.preventDefault();
+    if (inputValue !== '') {
+      setMessages([...messages, <div class="dialog__message question">{inputValue}</div>]);
+      let [answer, photo] = getAnswer(inputValue);
+      setMessages([
+        ...messages,
+        <div class="dialog__message answer" dangerouslySetInnerHTML={{ __html: answer }}></div>,
+      ]);
+      // photo.forEach((element) => {
+      //   messanger.innerHTML += element;
+      // });
+      // messanger.scrollTop = 99999;
+
+      let utterance = new SpeechSynthesisUtterance(answer);
+      speechSynthesis.cancel();
+      speechSynthesis.speak(utterance);
+    }
+    setInputValue('');
+  }
+
+  function inputClick() {
+    speechSynthesis.cancel();
+  }
+
+  function buttonOver() {
+    let button = document.getElementById('dialog__button');
+    button.classList.add('dialog__button-hover');
+  }
+
+  function buttonOut() {
+    let button = document.getElementById('dialog__button');
+    button.classList.remove('dialog__button-hover');
+  }
+
+  function buttonClick() {
+    let button = document.getElementById('dialog__button');
+    button.classList.add('dialog__button-listen');
+
+    speechSynthesis.cancel();
+
+    let recognizer = new SpeechRecognition(); //webkit..
+    recognizer.interimResults = true;
+    recognizer.lang = 'ru-Ru';
+    // eslint-disable-next-line no-unused-expressions
+    recognizer.on;
+    recognizer.onresult = function (event) {
+      let result = event.results[event.resultIndex];
+      if (result.isFinal) {
+        setInputValue(result[0].transcript);
+        button.classList.remove('dialog__button-listen');
+        handleForm();
+      } else {
+        setInputValue(result[0].transcript);
+      }
+    };
+    recognizer.onaudioend = function (event) {
+      button.classList.remove('dialog__button-listen');
+    };
+    recognizer.start();
+  }
+
+  function getEnding(word) {
+    // проверка по черному списку
+    if (blacklist.indexOf(word) !== -1) return -1;
+    // перебор псевдоокончаний
+    for (let j = 0; j < endings.length; j++) {
+      // проверка, оканчивается ли i-ое слово на j-ое псевдоокончание
+      if (word.substring(word.length - endings[j][0].length) === endings[j][0]) {
+        return j; // возврат номера псевдоокончания
+      }
+    }
+    return -1;
+  }
+
+  // функция, которая делает первую букву большой
+  function big1(str) {
+    return str[0].toUpperCase() + str.slice(1);
+  }
+
+  // главная функция, обрабатывающая запросы клиентов
+  function getAnswer(question) {
+    let txt = question.toLowerCase().replace(/[*_#?'",.!()[\]\\/]/g, '');
+    // массив слов и знаков препинания
+    let words = txt.split(' ');
+    // флаг, найден ли ответ
+    let result = false;
+    // формируемый функцией ответ на вопрос
+    let answer = [];
+    answer[0] = '';
+    answer[1] = new Array([]);
+    // перебор слов
+    for (let i = 0; i < words.length; i++) {
+      // поиск номера псевдоокончания
+      let ending = getEnding(words[i]);
+
+      // если псевдоокончание найдено – это сказуемое, подлежащее в вопросе после него
+      if (ending >= 0) {
+        // ТОЧНЫЙ ПОИСК
+        let subject_array = words.slice(i + 1);
+        let subject_text = subject_array.join(' ');
+        for (let j = 0; j < knowledge.length; j++)
+          if (
+            ((words[i] === knowledge[j][1] || // точное совпадение сказуемого
+              words[i].substring(0, words[i].length - endings[ending][0].length) + endings[ending][1] ===
+                knowledge[j][1]) && // совпадение сказуемого с подстановкой (такое ->- это)
+              subject_text === knowledge[j][0]) ||
+            subject_text === knowledge[j][2]
+          ) {
+            // совпадение подлежащего
+            // создание простого предложения из семантической связи
+            answer[0] += big1(knowledge[j][0] + ' ' + knowledge[j][1] + ' ' + knowledge[j][2] + '.<br/>');
+            if (knowledge[j][3]) answer[1].push(knowledge[j][3]);
+            result = true;
+            return answer;
+          }
+        if (result === false) {
+          // ПОИСК С ПОМОЩЬЮ РЕГУЛЯРНЫХ ВЫРАЖЕНИЙ
+          // замена псевдоокончания на набор возможных окончаний
+          words[i] = words[i].substring(0, words[i].length - endings[ending][0].length) + endings[ending][1];
+          // создание регулярного выражения для поиска по сказуемому из вопроса
+          let predicate = new RegExp(words[i]);
+          // для кратких прилагательных захватываем следующее слово
+          if (endings[ending][0] === endings[ending][1]) {
+            predicate = new RegExp(words[i] + ' ' + words[i + 1]);
+            i++;
+          }
+          let subject_array = words.slice(i + 1);
+          // создание регулярного выражения для поиска по подлежащему из вопроса
+          // из слов подлежащего выбрасываем короткие предлоги (периметр у квадрата = периметр квадрата)
+          for (let j = 0; j < subject_array.length; j++) {
+            if (subject_array[j].length < 3) {
+              subject_array.splice(j);
+              j--;
+            }
+          }
+          let subject_string = subject_array.join('.*');
+          // только если в послежащем больше трех символов
+          if (subject_string.length > 3) {
+            let subject = new RegExp('.*' + subject_string + '.*');
+            // поиск совпадений с шаблонами среди связей семантической сети
+            for (let j = 0; j < knowledge.length; j++) {
+              if (predicate.test(knowledge[j][1]) && (subject.test(knowledge[j][0]) || subject.test(knowledge[j][2]))) {
+                // создание простого предложения из семантической связи
+                answer[0] += big1(knowledge[j][0] + ' ' + knowledge[j][1] + ' ' + knowledge[j][2] + '.<br/>');
+                if (knowledge[j][3]) answer[1].push(knowledge[j][3]);
+                result = true;
+                return answer;
+              }
+            }
+            // если совпадений с двумя шаблонами нет
+            if (result === false) {
+              // поиск совпадений только с шаблоном подлежащего
+              for (let j = 0; j < knowledge.length; j++) {
+                if (subject.test(knowledge[j][0]) || subject.test(knowledge[j][2])) {
+                  // создание простого предложения из семантической связи
+                  answer[0] += big1(knowledge[j][0] + ' ' + knowledge[j][1] + ' ' + knowledge[j][2] + '.<br/>');
+                  if (knowledge[j][3]) answer[1].push(knowledge[j][3]);
+                  result = true;
+                  return answer;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    if (!result) answer[0] = 'Ответ не найден';
+    return answer;
+  }
   return (
     <section className={classes.theory}>
       <h1 className={classes.titleSticky}>ВНУТРЕННЯЯ ЭНЕРГИЯ И РАБОТА ЭЛЕКТРИЧЕСКОГО ТОКА</h1>
@@ -231,8 +400,12 @@ const Theory = () => {
       <section className={classes1.dialog}>
         <div className={classes1.dialog__window}>
           <h4 className={classes1.dialog__header}>База знаний</h4>
-          <div className={classes1.dialog__body} id="dialog__messanger"></div>
-          <form className={classes1.dialog__submit} id="dialog__form" onSubmit={() => false}>
+          <div className={classes1.dialog__body} id="dialog__messanger">
+            {messages.map((item) => (
+              <>{item}</>
+            ))}
+          </div>
+          <form className={classes1.dialog__submit} id="dialog__form" onSubmit={handleForm}>
             <input
               className={classes1.dialog__input}
               id="dialog__input"
@@ -240,8 +413,18 @@ const Theory = () => {
               name="question"
               autocomplete="off"
               placeholder="Введите ваш вопрос"
+              value={inputValue}
+              onChange={(e) => setInputValue(e.target.value)}
+              onClick={inputClick}
             />
-            <button className={classes1.dialog__button} id="dialog__button" type="button">
+            <button
+              className={classes1.dialog__button}
+              onMouseOver={buttonOver}
+              onMouseOut={buttonOut}
+              id="dialog__button"
+              type="button"
+              onClick={buttonClick}
+            >
               <i className="fas fa-microphone"></i>
             </button>
           </form>
