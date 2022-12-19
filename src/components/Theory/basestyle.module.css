@@ -103,7 +103,7 @@
   box-shadow: 4px 4px 8px 0px rgb(202, 202, 202);
 }
 
-.dialog__message.question {
+.question {
   font-family: 'Rubik', sans-serif;
   margin-left: auto;
   border-top-right-radius: 0;
