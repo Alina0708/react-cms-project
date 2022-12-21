@@ -27,6 +27,17 @@ const Theory = () => {
   useEffect(() => {
     Baseknow();
   }, []);
+  let i = 0;
+  const OpenBase = () => {
+    let base = document.getElementById('dialog');
+    console.log('heeeeeeelp');
+    i = i + 1;
+    if (i % 2 === 1) {
+      base.style.display = 'block';
+    } else {
+      base.style.display = 'none';
+    }
+  };
   return (
     <section className={classes.theory}>
       <h1 className={classes.titleSticky}>ВНУТРЕННЯЯ ЭНЕРГИЯ И РАБОТА ЭЛЕКТРИЧЕСКОГО ТОКА</h1>
@@ -228,9 +239,9 @@ const Theory = () => {
           <em>Георг Симон Ом</em>
         </div>
       </div>
-      <section className={classes1.dialog}>
+      <section id="dialog" className={classes1.dialog}>
         <div className={classes1.dialog__window}>
-          <h4 className={classes1.dialog__header}>База знаний</h4>
+          <h4 className={classes1.dialog__header}>Помощник</h4>
           <div className={classes1.dialog__body} id="dialog__messanger"></div>
           <form className={classes1.dialog__submit} id="dialog__form" onSubmit={() => false}>
             <input
@@ -245,6 +256,12 @@ const Theory = () => {
               <i className="fas fa-microphone"></i>
             </button>
           </form>
+        </div>
+      </section>
+
+      <section>
+        <div id="button_knowledge" onMouseDown={OpenBase} className={classes.button_knowledg_button_open}>
+          ?
         </div>
       </section>
     </section>

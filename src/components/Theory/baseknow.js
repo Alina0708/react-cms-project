@@ -1,6 +1,9 @@
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 import installation from '../../image/installation.jpg';
 import classes from './basestyle.module.css';
+
+import E from '../../image/formula_E.png';
+
 SpeechRecognition.startListening({ continuous: true });
 
 const Baseknow = () => {
@@ -14,7 +17,7 @@ const Baseknow = () => {
   function handleForm(e) {
     e.preventDefault();
     if (input.value != '') {
-      messanger.innerHTML += `<div className="dialog__message question">${input.value}</div>`;
+      messanger.innerHTML += `<div class=${classes.question}>${input.value}</div>`;
       let [answer, photo] = getAnswer(input.value);
       messanger.innerHTML += `<div class="dialog__message answer">${answer}</div>`;
       photo.forEach((element) => {
@@ -485,9 +488,10 @@ const Baseknow = () => {
       'следующий вид: U = U1 + U2 = I(R1 + R2) = IR, где R – электрическое сопротивление всей цепи',
     ],
     [
-      'масса теплоты',
+      'внутренняя энергия',
       'находится',
-      'по формуле Q = c m ( t 2 − t 1 ) записывают в виде Q = C ( t 2 − t 1 ) . Здесь величина C = c m называется теплоемкостью тела (обратите внимание — не вещества). Она численно равна количеству теплоты, необходимому для нагревания всей массы тела на 1 °С',
+      'по формуле E = c m ( t 2 − t 1 ). Здесь величина C = c m называется теплоемкостью тела (обратите внимание — не вещества). Она численно равна количеству теплоты, необходимому для нагревания всей массы тела на 1 °С',
+      `<img alt="что-то пошло не так.." class=${classes.knowImage} src=${E}/>`,
     ],
     [
       'формула температуры через сопротивление',

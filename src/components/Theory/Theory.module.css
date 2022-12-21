@@ -124,3 +124,19 @@ li::marker {
 .theory .joule-tooltip {
   height: 14rem;
 }
+
+.button_knowledg_button_open {
+  color: white;
+  position: fixed;
+  font-size: 16px;
+  padding: 13px 20px;
+  bottom: 30px;
+  right: 59px;
+  background-color: #0c0c0c;
+  border-radius: 50%;
+  transition: all ease-in-out 0.2s;
+}
+
+.button_knowledg_button_open:hover {
+  background-color: #9f3dfd;
+}
