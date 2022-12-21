@@ -126,3 +126,8 @@
   border-top-left-radius: 0;
   width: 50%;
 }
+
+.knowImage {
+  max-width: auto;
+  max-height: auto;
+}

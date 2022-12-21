@@ -79,7 +79,7 @@ const Theory = () => {
       </p>
       <p>То, работа электрического тока:</p>
       <div className={classes.formule}>
-        <img alt="W_UQ" src={W_UQ} />
+        <img alt="W_UQ" className={classes.omaW2} src={W_UQ} />
         <span className={classes.numberingFormule}>(1)</span>
       </div>
       <p>
@@ -87,13 +87,13 @@ const Theory = () => {
         формула (2).
       </p>
       <div className={classes.formule}>
-        <img alt="Q" src={Q} />
+        <img alt="Q" className={classes.omaW2} src={Q} />
         <span className={classes.numberingFormule}>(2)</span>
       </div>
       <p>то получаем</p>
       <h3>Работа электрического тока через напряжение и ток</h3>
       <div className={classes.formule}>
-        <img alt="W" src={W} />
+        <img alt="W" className={classes.omaW2} src={W} />
         <span className={classes.numberingFormule}>(3)</span>
       </div>
       <p>
@@ -143,7 +143,7 @@ const Theory = () => {
         Tn. Внутренняя энергия увеличивается на величину:
       </p>
       <div className={classes.formule}>
-        <img alt="E" src={E} />
+        <img alt="E" className={classes.omaW2} src={E} />
         <span className={classes.numberingFormule}>(7)</span>
       </div>
       <p>где m – масса тела,</p>
@@ -155,7 +155,7 @@ const Theory = () => {
       </p>
       <p>В таких условиях изменение внутренней энергии должно быть равно проделанной работе, что означает следующее:</p>
       <div className={classes.formule}>
-        <img alt="E_W" src={E_W} />
+        <img alt="E_W" className={classes.omaW2} src={E_W} />
         <span className={classes.numberingFormule}>(8)</span>
       </div>
       <p>

@@ -10,6 +10,7 @@ import photo9 from '../../image/photo9.png';
 import photo10 from '../../image/photo10.png';
 import photo11 from '../../image/photo11.png';
 
+
 const Simulator = () => {
   return (
     <section>
@@ -54,3 +55,4 @@ const Simulator = () => {
   );
 };
 export default Simulator;
+//   <a href="../../Webgl/index.html">f</a>
