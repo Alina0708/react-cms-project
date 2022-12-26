@@ -119,6 +119,7 @@
 }
 
 .knowImage {
-  max-width: auto;
+  margin: 50px;
+  max-width: 200px;
   max-height: auto;
 }
