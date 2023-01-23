@@ -599,6 +599,7 @@ const Baseknow = () => {
     let answer = [];
     answer[0] = '';
     answer[1] = new Array([]);
+    
     // перебор слов
     for (let i = 0; i < words.length; i++) {
       // поиск номера псевдоокончания

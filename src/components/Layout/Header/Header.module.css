@@ -32,6 +32,7 @@ header {
 @media (max-width: 700px) {
   .item {
     margin-left: 9px;
+    /*hello*/
   }
   .activeLink {
     margin-left: 9px;
