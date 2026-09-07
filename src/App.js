@@ -17,7 +17,6 @@ function App() {
           <Route path="theory" element={<Theory />} />
           <Route path="structure" element={<Structure />} />
           <Route path="simulator" element={<Simulator />} />
-          <Route path="home" element={<Home />} />
           <Route path="contacts" element={<Contacts />} />
         </Route>
       </Routes>

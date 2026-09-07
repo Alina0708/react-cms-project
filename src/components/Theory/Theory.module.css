@@ -19,7 +19,7 @@ h1,
 h3 {
   display: flex;
   justify-content: center;
-  color: #8241be;
+  color: var(--color-primary);
   margin: 0;
   padding-bottom: 1rem;
   /* margin-bottom: 1vw; */
@@ -36,7 +36,7 @@ h3 {
 }
 
 .decoding {
-  color: #9f3dfd;
+  color: var(--color-primary-strong);
   width: 2px;
 }
 
@@ -57,11 +57,11 @@ h3 {
   text-align: justify;
 }
 li::marker {
-  color: #9f3dfd;
+  color: var(--color-primary-strong);
 }
 
 .definition {
-  color: #9f3dfd;
+  color: var(--color-primary-strong);
 }
 
 .scientist {
@@ -88,7 +88,7 @@ li::marker {
   margin-top: 30px;
   color: black;
   font-weight: 600;
-  background-color: #9f3dfd;
+  background-color: var(--color-primary-strong);
 }
 
 .scientists {
@@ -119,4 +119,37 @@ li::marker {
 
 .theory .joule-tooltip {
   height: 14rem;
+}
+
+.dataTable {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 24px 0;
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-soft);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.dataTable th,
+.dataTable td {
+  border: 1px solid var(--color-border);
+  padding: 10px 12px;
+  text-align: center;
+  color: var(--color-text);
+}
+
+.dataTable thead th {
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-strong) 100%);
+  color: var(--color-surface);
+  font-weight: 600;
+}
+
+.dataTable tbody tr:nth-child(even) {
+  background: var(--color-primary-soft);
+}
+
+.dataTable tbody tr:hover {
+  background: #efe3ff;
 }

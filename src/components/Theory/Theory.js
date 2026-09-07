@@ -221,6 +221,62 @@ const Theory = () => {
           <em>Георг Симон Ом</em>
         </div>
       </div>
+
+      <table className={classes.dataTable}>
+        <thead>
+          <tr>
+            <th>1</th>
+            <th>2</th>
+            <th>3</th>
+            <th>4</th>
+            <th>5</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>№</td>
+            <td>Date</td>
+            <td>Salary</td>
+            <td>-</td>
+            <td>-</td>
+          </tr>
+          <tr>
+            <td>1</td>
+            <td>01.01.2024</td>
+            <td>1000</td>
+            <td>-</td>
+            <td>-</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>02.01.2024</td>
+            <td>1500</td>
+            <td>-</td>
+            <td>-</td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>03.01.2024</td>
+            <td>2000</td>
+            <td>-</td>
+            <td>-</td>
+          </tr>
+          <tr>
+            <td>4</td>
+            <td>04.01.2024</td>
+            <td>2500</td>
+            <td>-</td>
+            <td>-</td>
+          </tr>
+          <tr>
+            <td>5</td>
+            <td>05.01.2024</td>
+            <td>3000</td>
+            <td>-</td>
+            <td>-</td>
+          </tr>
+        </tbody>
+      </table>
     </section>
   );
 };

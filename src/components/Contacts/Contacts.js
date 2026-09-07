@@ -38,12 +38,12 @@ const Contacts = () => {
             </a>
           </div>
           <div>
-            <a href="https://github.com/Alina0708/react-cms-project.git" target="_blank">
+            <a href="https://github.com/Alina0708/react-cms-project.git" target="_blank" rel="noreferrer">
               <img className={classes.icon} src={githubIcon} alt="github" />
             </a>
           </div>
           <div>
-            <a href="https://t.me/alina_sevryuk" target="_blank">
+            <a href="https://t.me/alina_sevryuk" target="_blank" rel="noreferrer">
               <img className={classes.icon} src={telegramIcon} alt="telegram" />
             </a>
           </div>

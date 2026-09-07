@@ -1,6 +1,6 @@
 p {
   margin: 0;
-  line-height: 1.5;
+  line-height: 1.6;
 }
 
 h4 {
@@ -12,5 +12,5 @@ Link {
 }
 
 section {
-  padding: 3vw 4vw;
+  padding: 2.5rem 1.25rem;
 }
