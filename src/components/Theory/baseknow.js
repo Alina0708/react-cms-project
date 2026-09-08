@@ -1,4 +1,4 @@
-import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
+import SpeechRecognition from 'react-speech-recognition';
 import installation from '../../image/installation.jpg';
 import classes from './basestyle.module.css';
 
@@ -6,13 +6,11 @@ import E from '../../image/formula_E.png';
 import joule from '../../image/joule.jpg';
 import lenz from '../../image/lenz.jpg';
 import om from '../../image/Ohm.jpg';
-import omon from '../../image/oma_low.jpg'; //C:\study\5sem\КМС\курсач\my-app\src\image\omaimg.png
 import A from '../../image/A.png';
 import EConst from '../../image/EConst.png';
 import q2 from '../../image/q2.png';
 import DL from '../../image/DL.jpg';
 import Uqa from '../../image/Uqa.png';
-import pir from '../../image/pir.png';
 import slide from '../../image/slide-12.jpg';
 SpeechRecognition.startListening({ continuous: true });
 
@@ -26,7 +24,7 @@ const Baseknow = () => {
 
   function handleForm(e) {
     e.preventDefault();
-    if (input.value != '') {
+    if (input.value !== '') {
       messanger.innerHTML += `<div class=${classes.question}>${input.value}</div>`;
       let [answer, photo] = getAnswer(input.value);
       messanger.innerHTML += `<div class="dialog__message answer">${answer}</div>`;
@@ -576,7 +574,7 @@ const Baseknow = () => {
     // перебор псевдоокончаний
     for (let j = 0; j < endings.length; j++) {
       // проверка, оканчивается ли i-ое слово на j-ое псевдоокончание
-      if (word.substring(word.length - endings[j][0].length) == endings[j][0]) {
+      if (word.substring(word.length - endings[j][0].length) === endings[j][0]) {
         return j; // возврат номера псевдоокончания
       }
     }
@@ -590,7 +588,7 @@ const Baseknow = () => {
 
   // главная функция, обрабатывающая запросы клиентов
   function getAnswer(question) {
-    let txt = question.toLowerCase().replace(/[*_#?\'",.!()[\]\\/]/g, '');
+    let txt = question.toLowerCase().replace(/[*_#?'",.!()[\]\\/]/g, '');
     // массив слов и знаков препинания
     let words = txt.split(' ');
     // флаг, найден ли ответ
@@ -599,7 +597,7 @@ const Baseknow = () => {
     let answer = [];
     answer[0] = '';
     answer[1] = new Array([]);
-    
+
     // перебор слов
     for (let i = 0; i < words.length; i++) {
       // поиск номера псевдоокончания
@@ -612,11 +610,11 @@ const Baseknow = () => {
         let subject_text = subject_array.join(' ');
         for (let j = 0; j < knowledge.length; j++)
           if (
-            ((words[i] == knowledge[j][1] || // точное совпадение сказуемого
-              words[i].substring(0, words[i].length - endings[ending][0].length) + endings[ending][1] ==
+            ((words[i] === knowledge[j][1] || // точное совпадение сказуемого
+              words[i].substring(0, words[i].length - endings[ending][0].length) + endings[ending][1] ===
                 knowledge[j][1]) && // совпадение сказуемого с подстановкой (такое ->- это)
-              subject_text == knowledge[j][0]) ||
-            subject_text == knowledge[j][2]
+              subject_text === knowledge[j][0]) ||
+            subject_text === knowledge[j][2]
           ) {
             // совпадение подлежащего
             // создание простого предложения из семантической связи
@@ -625,14 +623,14 @@ const Baseknow = () => {
             result = true;
             return answer;
           }
-        if (result == false) {
+        if (result === false) {
           // ПОИСК С ПОМОЩЬЮ РЕГУЛЯРНЫХ ВЫРАЖЕНИЙ
           // замена псевдоокончания на набор возможных окончаний
           words[i] = words[i].substring(0, words[i].length - endings[ending][0].length) + endings[ending][1];
           // создание регулярного выражения для поиска по сказуемому из вопроса
           let predicate = new RegExp(words[i]);
           // для кратких прилагательных захватываем следующее слово
-          if (endings[ending][0] == endings[ending][1]) {
+          if (endings[ending][0] === endings[ending][1]) {
             predicate = new RegExp(words[i] + ' ' + words[i + 1]);
             i++;
           }
@@ -661,7 +659,7 @@ const Baseknow = () => {
               }
             }
             // если совпадений с двумя шаблонами нет
-            if (result == false) {
+            if (result === false) {
               // поиск совпадений только с шаблоном подлежащего
               for (let j = 0; j < knowledge.length; j++) {
                 if (subject.test(knowledge[j][0]) || subject.test(knowledge[j][2])) {

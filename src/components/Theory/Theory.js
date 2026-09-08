@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import Baseknow from './baseknow';
-import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
+import SpeechRecognition from 'react-speech-recognition';
 
 import classes from '../Theory/Theory.module.css';
 import ReactTooltip from 'react-tooltip';
@@ -12,7 +12,6 @@ import EConst from '../../image/EConst.png';
 import q2 from '../../image/q2.png';
 import DL from '../../image/DL.jpg';
 import Uqa from '../../image/Uqa.png';
-import pir from '../../image/pir.png';
 import slide from '../../image/slide-12.jpg';
 //
 import W from '../../image/formula_W.png';
@@ -521,7 +520,7 @@ const Theory = () => {
     // перебор псевдоокончаний
     for (let j = 0; j < endings.length; j++) {
       // проверка, оканчивается ли i-ое слово на j-ое псевдоокончание
-      if (word.substring(word.length - endings[j][0].length) == endings[j][0]) {
+      if (word.substring(word.length - endings[j][0].length) === endings[j][0]) {
         return j; // возврат номера псевдоокончания
       }
     }
@@ -535,7 +534,7 @@ const Theory = () => {
 
   // главная функция, обрабатывающая запросы клиентов
   function getAnswer(question) {
-    let txt = question.toLowerCase().replace(/[*_#?\'",.!()[\]\\/]/g, '');
+    let txt = question.toLowerCase().replace(/[*_#?'",.!()[\]\\/]/g, '');
     // массив слов и знаков препинания
     let words = txt.split(' ');
     // флаг, найден ли ответ
@@ -557,11 +556,11 @@ const Theory = () => {
         let subject_text = subject_array.join(' ');
         for (let j = 0; j < knowledge.length; j++)
           if (
-            ((words[i] == knowledge[j][1] || // точное совпадение сказуемого
-              words[i].substring(0, words[i].length - endings[ending][0].length) + endings[ending][1] ==
+            ((words[i] === knowledge[j][1] || // точное совпадение сказуемого
+              words[i].substring(0, words[i].length - endings[ending][0].length) + endings[ending][1] ===
                 knowledge[j][1]) && // совпадение сказуемого с подстановкой (такое ->- это)
-              subject_text == knowledge[j][0]) ||
-            subject_text == knowledge[j][2]
+              subject_text === knowledge[j][0]) ||
+            subject_text === knowledge[j][2]
           ) {
             // совпадение подлежащего
             // создание простого предложения из семантической связи
@@ -570,14 +569,14 @@ const Theory = () => {
             result = true;
             return answer;
           }
-        if (result == false) {
+        if (result === false) {
           // ПОИСК С ПОМОЩЬЮ РЕГУЛЯРНЫХ ВЫРАЖЕНИЙ
           // замена псевдоокончания на набор возможных окончаний
           words[i] = words[i].substring(0, words[i].length - endings[ending][0].length) + endings[ending][1];
           // создание регулярного выражения для поиска по сказуемому из вопроса
           let predicate = new RegExp(words[i]);
           // для кратких прилагательных захватываем следующее слово
-          if (endings[ending][0] == endings[ending][1]) {
+          if (endings[ending][0] === endings[ending][1]) {
             predicate = new RegExp(words[i] + ' ' + words[i + 1]);
             i++;
           }
@@ -606,7 +605,7 @@ const Theory = () => {
               }
             }
             // если совпадений с двумя шаблонами нет
-            if (result == false) {
+            if (result === false) {
               // поиск совпадений только с шаблоном подлежащего
               for (let j = 0; j < knowledge.length; j++) {
                 if (subject.test(knowledge[j][0]) || subject.test(knowledge[j][2])) {
@@ -646,7 +645,7 @@ const Theory = () => {
 
   const OpenBaseDialog = () => {
     // eslint-disable-next-line no-restricted-globals
-    let start = confirm('Желаете задать вопрос?');
+    confirm('Желаете задать вопрос?');
     let question = prompt('Введите вопрос', '');
     alert(getAnswer(question));
   };
