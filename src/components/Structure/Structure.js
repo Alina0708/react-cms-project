@@ -1,10 +1,34 @@
+import { useState } from 'react';
+
 import classes from '../Structure/Structure.module.css';
 // import installation from '../../image/installation.jpg';
 import installation2 from '../../image/installation2.jpg';
 import DC_Power_Supply from '../../image/DC_Power_Supply.jpg';
 import multimetr from '../../image/multimetr.png';
+import power from '../../image/power.jpg';
+import copper from '../../image/copper.jpg';
+import time from '../../image/time.jpg';
+import aluminum from '../../image/aluminum.jpg';
+import Modal from '../Modal/Modal';
 
 const Structure = () => {
+  const imagesType = { power: power, multimetr: multimetr, copper: copper, time: time, aluminum: aluminum };
+  const [displayImg, setDisplayImg] = useState({
+    power: false,
+    multimetr: false,
+    copper: false,
+    time: false,
+    aluminum: false,
+  });
+  const [show, setShow] = useState();
+
+  const displayImgName = Object.keys(displayImg).find((item) => displayImg[item]);
+
+  const closeImg = () => {
+    setShow(false);
+    setDisplayImg({ ...displayImg, displayImgName: false });
+  };
+
   return (
     <section className={classes.structure}>
       <h1 className={classes.titleSticky}>Структура и описание установки</h1>
@@ -18,17 +42,60 @@ const Structure = () => {
           <p>(Рис.2 - Изображение установки с прямого ракурса)</p>
         </div>
         <div className={classes.compound}>
-          <em>1 — источник питания</em>
-          <em>2 — медное тело</em>
-          <em>3 — алюминивое тело</em>
-          <em>4 — мультиметр</em>
-          <em>Также в ходе эксперимента нам понадобиться секундомер</em>
+          <em
+            images="https://m.media-amazon.com/images/I/81pXZat-ifL._SL1500_.jpg"
+            onClick={() => {
+              setDisplayImg({ power: true });
+              setShow(true);
+            }}
+          >
+            1 — источник питания
+          </em>
+          <em
+            onClick={() => {
+              setDisplayImg({ copper: true });
+              setShow(true);
+            }}
+          >
+            2 — медное тело
+          </em>
+          <em
+            onClick={() => {
+              setDisplayImg({ aluminum: true });
+              setShow(true);
+            }}
+          >
+            3 — алюминивое тело
+          </em>
+          <em
+            onClick={() => {
+              setDisplayImg({ multimetr: true });
+              setShow(true);
+            }}
+          >
+            4 — мультиметр
+          </em>
+          <em
+            onClick={() => {
+              setDisplayImg({ time: true });
+              setShow(true);
+            }}
+          >
+            Также в ходе эксперимента нам понадобиться секундомер
+          </em>
+          {show && (
+            <Modal show={show} setShow={closeImg}>
+              <div>
+                <img alt="images" src={imagesType[displayImgName]} />
+              </div>
+            </Modal>
+          )}
         </div>
       </div>
       <h1>Источник питания</h1>
       <div className={classes.componentInstallaion}>
         <img alt="DC_Power_Supply" src={DC_Power_Supply} />
-        <p>
+        <div className={classes.power}>
           Регулируемые импульсные источники питания с высокостабильными выходными характеристиками и ультранизкими
           пульсациями. Цифровая индикация выходных значений напряжения и тока. Оперативный сброс выхода в ноль. Защита
           от перегрузки, короткого замыкания, перегрева. Терморегулированная вентиляция. Минимальная дискретность
@@ -44,7 +111,7 @@ const Structure = () => {
           <p>Клеммы: безопасные гнезда 4 мм</p>
           <p>Размеры: прибл. 130x150x300 мм³</p>
           <p>Вес: прибл. 4,7 кг</p>
-        </p>
+        </div>
       </div>
       <h1>Мультиметр</h1>
       <div className={classes.componentInstallaion}>
@@ -68,6 +135,35 @@ const Structure = () => {
           <p>Рабочее напряжение: батарея 9 В</p>
           <p>Напряжение постоянного тока: 200 мВ − 600 В, 5 диапазонов, ±0,5% ± 2 разряда</p>
         </div>
+      </div>
+
+      <h1 className={classes.titleSticky}>Ход работы установки</h1>
+      <p>
+        1. Для начала выполнения лабораторной работы нам необходимо нажать кнопку Power на источнике питания. Запустить
+        секундомер.
+      </p>
+      <p>2. Установить положение ручки мультиметра на режим для измерения сопротивления силы тока.</p>
+      <p>
+        3. Установить значение постоянного напряжения, нажимая на ручку постоянного напряжения. Записать значение
+        напряжение в таблицу.
+      </p>
+      <p>
+        4. Установить значение постоянного тока, нажимая на ручку постоянного тока. Записать значение тока в таблицу.
+      </p>
+      <p>5. Записать значение секундомера в таблицу.</p>
+
+      <h1 className={classes.titleSticky}>Дополнительные сведения</h1>
+      <div>
+        Чтобы просмотреть карту установки, перейдите по ссылке
+        <a href="map/test100.html" target="_blank">
+          Open new page with map
+        </a>
+      </div>
+      <div>
+        Чтобы просмотреть видео работы установки, перейдите по ссылке
+        <a href="map/video_html.html" target="_blank">
+          Open new page with video
+        </a>
       </div>
     </section>
   );

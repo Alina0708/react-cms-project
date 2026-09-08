@@ -11,9 +11,10 @@
   transform: scale(1.5);
 }
 
+/*
 .theory img {
   height: 25px;
-}
+}*/
 
 h1,
 h3 {
@@ -50,6 +51,9 @@ h3 {
 
 .omaW {
   height: 30px !important;
+}
+.omaW2 {
+  height: 20px !important;
 }
 
 .theory p {
@@ -152,4 +156,36 @@ li::marker {
 
 .dataTable tbody tr:hover {
   background: #efe3ff;
+}
+
+.button_knowledg_button_open {
+  color: white;
+  position: fixed;
+  font-size: 16px;
+  padding: 13px 20px;
+  bottom: 60px;
+  right: 59px;
+  background-color: #0c0c0c;
+  border-radius: 50%;
+  transition: all ease-in-out 0.2s;
+}
+
+.button_knowledg_button_open:hover {
+  background-color: #9f3dfd;
+}
+
+.button_knowledg_button_open1 {
+  color: white;
+  position: fixed;
+  font-size: 16px;
+  padding: 13px 20px;
+  top: 155px;
+  right: 59px;
+  background-color: #0c0c0c;
+  border-radius: 50%;
+  transition: all ease-in-out 0.2s;
+}
+
+.button_knowledg_button_open1:hover {
+  background-color: #9f3dfd;
 }
