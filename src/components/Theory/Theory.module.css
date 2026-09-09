@@ -1,3 +1,12 @@
+.theory {
+  position: relative;
+  padding: clamp(1.5rem, 4vw, 3.5rem) clamp(1rem, 5vw, 5rem);
+  color: var(--color-text);
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+}
+
 .formule {
   display: flex;
   justify-content: center;
@@ -20,7 +29,7 @@ h1,
 h3 {
   display: flex;
   justify-content: center;
-  color: var(--color-primary);
+  color: var(--color-primary-deep);
   margin: 0;
   padding-bottom: 1rem;
   /* margin-bottom: 1vw; */
@@ -37,7 +46,7 @@ h3 {
 }
 
 .decoding {
-  color: var(--color-primary-strong);
+  color: #587a00;
   width: 2px;
 }
 
@@ -65,7 +74,8 @@ li::marker {
 }
 
 .definition {
-  color: var(--color-primary-strong);
+  color: #587a00;
+  font-weight: 700;
 }
 
 .scientist {
@@ -73,7 +83,7 @@ li::marker {
   margin-bottom: 30px;
   width: 220px;
   height: 225px;
-  background-color: black;
+  background-color: var(--color-ink);
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
@@ -112,7 +122,7 @@ li::marker {
 .titleSticky {
   position: sticky;
   top: 60px;
-  background: white;
+  background: rgba(242, 240, 232, 0.94);
   z-index: 1;
 }
 
@@ -145,8 +155,8 @@ li::marker {
 }
 
 .dataTable thead th {
-  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-strong) 100%);
-  color: var(--color-surface);
+  background: var(--color-ink);
+  color: var(--color-primary);
   font-weight: 600;
 }
 
@@ -155,7 +165,7 @@ li::marker {
 }
 
 .dataTable tbody tr:hover {
-  background: #efe3ff;
+  background: var(--color-primary-soft);
 }
 
 .button_knowledg_button_open {
@@ -171,7 +181,7 @@ li::marker {
 }
 
 .button_knowledg_button_open:hover {
-  background-color: #9f3dfd;
+  background-color: var(--color-accent);
 }
 
 .button_knowledg_button_open1 {
@@ -187,5 +197,19 @@ li::marker {
 }
 
 .button_knowledg_button_open1:hover {
-  background-color: #9f3dfd;
+  background-color: var(--color-accent);
+}
+
+@media (max-width: 700px) {
+  .theory {
+    padding: 1.25rem 1rem;
+  }
+
+  .theory p {
+    text-align: left;
+  }
+
+  .scientists {
+    flex-wrap: wrap;
+  }
 }

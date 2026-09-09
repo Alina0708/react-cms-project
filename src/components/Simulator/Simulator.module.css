@@ -2,6 +2,10 @@
   display: flex;
   align-items: center;
   flex-direction: column;
+  padding: 1.5rem;
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
 }
 
 .sizeImage img {
@@ -12,13 +16,28 @@
 .sizeImage p {
   margin-top: 10px;
   margin-bottom: 10px;
-  max-width: 80%;
+  max-width: 720px;
   text-align: left;
+  color: var(--color-text-muted);
 }
 
 .titleSticky {
-    position: sticky;
-    top: 60px;
-    background: white;
-    z-index: 1;
+  position: sticky;
+  top: 72px;
+  background: rgba(242, 240, 232, 0.94);
+  color: var(--color-primary-deep);
+  z-index: 1;
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius-md);
+  backdrop-filter: blur(8px);
+}
+
+@media (max-width: 700px) {
+  .sizeImage {
+    padding: 0.75rem;
   }
+
+  .sizeImage img {
+    max-width: 100%;
+  }
+}

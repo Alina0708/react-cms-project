@@ -3,20 +3,20 @@ p {
   line-height: 1.6;
 }
 
+h1,
+h2,
+h3,
 h4 {
   margin: 0;
-}
-
-Link {
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-family: 'Space Grotesk', 'Trebuchet MS', sans-serif;
 }
 
 section {
-  padding: 2.5rem 1.25rem;
+  padding: 1.5rem 0;
 }
 
-@media (max-width: 600) {
-  section{
-    padding: 0vw 0vw;
+@media (max-width: 600px) {
+  section {
+    padding: 1rem 0;
   }
 }
