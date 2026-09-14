@@ -1,0 +1,474 @@
+/*
+  Design B — technical / lab-instrument variant of the Welcome page.
+  Local token system kept separate from the live theme (and from the
+  design-a editorial variant): a cool "graph paper" surface, blueprint-blue
+  linework, and a single copper/signal accent standing in for a heating
+  element under load. Reuses the shared spacing scale from
+  src/styles/theme.css where it already fits.
+*/
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+
+.page {
+  --db-paper: #eef2ee;
+  --db-surface: #f8faf8;
+  --db-ink: #12211f;
+  --db-ink-soft: #47605c;
+  --db-blue: #1f3f66;
+  --db-blue-30: rgba(31, 63, 102, 0.3);
+  --db-blue-10: rgba(31, 63, 102, 0.1);
+  --db-blue-08: rgba(31, 63, 102, 0.08);
+  --db-signal: #c8491f;
+  --db-signal-soft: rgba(200, 73, 31, 0.16);
+
+  color: var(--db-ink);
+}
+
+.frame {
+  position: relative;
+  background-color: var(--db-paper);
+  background-image: linear-gradient(var(--db-blue-10) 1px, transparent 1px),
+    linear-gradient(90deg, var(--db-blue-10) 1px, transparent 1px);
+  background-size: 32px 32px;
+  border: 1px solid var(--db-blue-30);
+  padding: clamp(2rem, 5vw, 3.5rem);
+  display: flex;
+  flex-direction: column;
+  gap: clamp(2.25rem, 5vw, 3.5rem);
+}
+
+/* ---------- Registration marks ---------- */
+
+.corner {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  pointer-events: none;
+}
+
+.corner::before,
+.corner::after {
+  content: '';
+  position: absolute;
+  background: var(--db-blue);
+}
+
+.corner::before {
+  top: 50%;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  transform: translateY(-50%);
+}
+
+.corner::after {
+  left: 50%;
+  top: 0;
+  height: 100%;
+  width: 1px;
+  transform: translateX(-50%);
+}
+
+.cornerTl {
+  top: -8px;
+  left: -8px;
+}
+
+.cornerTr {
+  top: -8px;
+  right: -8px;
+}
+
+.cornerBl {
+  bottom: -8px;
+  left: -8px;
+}
+
+.cornerBr {
+  bottom: -8px;
+  right: -8px;
+}
+
+/* ---------- Hero ---------- */
+
+.hero {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: clamp(2rem, 4vw, 3.5rem);
+  align-items: center;
+}
+
+.heroText {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+  max-width: 54ch;
+}
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55em;
+  width: max-content;
+  padding-bottom: 0.6rem;
+  border-bottom: 1px solid var(--db-blue-30);
+  font-family: 'IBM Plex Mono', 'Courier New', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--db-blue);
+}
+
+.tag::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--db-signal);
+  box-shadow: 0 0 0 3px var(--db-signal-soft);
+}
+
+.title {
+  font-family: 'Barlow Condensed', 'Trebuchet MS', sans-serif;
+  font-weight: 700;
+  font-size: clamp(2.1rem, 4.6vw, 3.6rem);
+  line-height: 1.04;
+  letter-spacing: -0.01em;
+  color: var(--db-ink);
+}
+
+.subtitle {
+  font-size: clamp(0.95rem, 1.3vw, 1.05rem);
+  line-height: 1.65;
+  color: var(--db-ink-soft);
+  max-width: 52ch;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 0.4rem;
+}
+
+.primaryButton,
+.secondaryButton {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.7rem 1.35rem;
+  font-family: 'Barlow Condensed', 'Trebuchet MS', sans-serif;
+  font-weight: 600;
+  font-size: 1.05rem;
+  letter-spacing: 0.01em;
+  border-radius: 2px;
+  text-decoration: none;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+}
+
+.primaryButton {
+  background: var(--db-signal);
+  color: #fff7f0;
+  box-shadow: 3px 3px 0 var(--db-ink);
+}
+
+.primaryButton:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 5px 5px 0 var(--db-ink);
+}
+
+.secondaryButton {
+  background: transparent;
+  color: var(--db-blue);
+  border: 1px solid var(--db-blue);
+}
+
+.secondaryButton:hover {
+  background: var(--db-blue-08);
+}
+
+.primaryButton:focus-visible,
+.secondaryButton:focus-visible,
+.channelLink:focus-visible {
+  outline: 2px solid var(--db-signal);
+  outline-offset: 3px;
+}
+
+/* ---------- Figure ---------- */
+
+.figure {
+  position: relative;
+  margin: 0;
+  padding: 10px;
+  background: var(--db-surface);
+  border: 1px solid var(--db-blue-30);
+}
+
+.figureImage {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  filter: saturate(0.92) contrast(1.05);
+}
+
+.figureCaption {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 0.55rem;
+  font-family: 'IBM Plex Mono', 'Courier New', monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--db-blue);
+}
+
+.figureTick {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  pointer-events: none;
+}
+
+.figureTick::before,
+.figureTick::after {
+  content: '';
+  position: absolute;
+  background: var(--db-blue);
+}
+
+.figureTick::before {
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 1px;
+}
+
+.figureTick::after {
+  top: 0;
+  left: 0;
+  width: 1px;
+  height: 100%;
+}
+
+.figureTickTl {
+  top: -1px;
+  left: -1px;
+}
+
+.figureTickBr {
+  bottom: -1px;
+  right: -1px;
+  transform: rotate(180deg);
+}
+
+/* ---------- Ruler divider ---------- */
+
+.ruler {
+  position: relative;
+  height: 10px;
+  border-bottom: 1px solid var(--db-blue-30);
+}
+
+.ruler::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 6px;
+  background-image: repeating-linear-gradient(
+    to right,
+    var(--db-blue-30) 0,
+    var(--db-blue-30) 1px,
+    transparent 1px,
+    transparent 20px
+  );
+}
+
+/* ---------- Channels ---------- */
+
+.channels {
+  display: flex;
+  flex-direction: column;
+  gap: 1.35rem;
+}
+
+.channelsLabel {
+  font-family: 'IBM Plex Mono', 'Courier New', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--db-blue);
+}
+
+.channelList {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2.25rem;
+  border-top: 1px solid var(--db-blue-30);
+  padding-top: 2.25rem;
+}
+
+.channel {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.channel::before {
+  content: '';
+  position: absolute;
+  top: -2.25rem;
+  left: 0;
+  width: 1px;
+  height: 2.25rem;
+  background: var(--db-blue-30);
+}
+
+.channelNode {
+  position: absolute;
+  top: -2.25rem;
+  left: 0;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--db-paper);
+  border: 2px solid var(--db-blue);
+  transform: translate(-50%, -50%);
+}
+
+.channelCode {
+  font-family: 'IBM Plex Mono', 'Courier New', monospace;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--db-signal);
+}
+
+.channelTitle {
+  font-family: 'Barlow Condensed', 'Trebuchet MS', sans-serif;
+  font-weight: 600;
+  font-size: 1.4rem;
+  color: var(--db-ink);
+}
+
+.channelText {
+  flex: 1;
+  max-width: 34ch;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: var(--db-ink-soft);
+}
+
+.channelLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  width: max-content;
+  padding-bottom: 2px;
+  border-bottom: 1px solid transparent;
+  font-family: 'Barlow Condensed', 'Trebuchet MS', sans-serif;
+  font-weight: 600;
+  font-size: 0.98rem;
+  letter-spacing: 0.01em;
+  color: var(--db-blue);
+  text-decoration: none;
+  transition: color 0.15s ease, border-color 0.15s ease, gap 0.15s ease;
+}
+
+.channelLink:hover {
+  color: var(--db-signal);
+  border-color: var(--db-signal);
+  gap: 0.6rem;
+}
+
+.channelLinkIcon {
+  flex-shrink: 0;
+}
+
+/* ---------- Entrance sequence (single orchestrated reveal) ---------- */
+
+@media (prefers-reduced-motion: no-preference) {
+  .tag,
+  .title,
+  .subtitle,
+  .actions,
+  .figure {
+    animation: db-reveal 0.6s cubic-bezier(0.16, 0.8, 0.3, 1) both;
+  }
+
+  .tag {
+    animation-delay: 0s;
+  }
+
+  .figure {
+    animation-delay: 0.1s;
+  }
+
+  .title {
+    animation-delay: 0.08s;
+  }
+
+  .subtitle {
+    animation-delay: 0.18s;
+  }
+
+  .actions {
+    animation-delay: 0.26s;
+  }
+
+  @keyframes db-reveal {
+    from {
+      opacity: 0;
+      clip-path: inset(0 100% 0 0);
+    }
+
+    to {
+      opacity: 1;
+      clip-path: inset(0 0 0 0);
+    }
+  }
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 860px) {
+  .hero {
+    grid-template-columns: 1fr;
+  }
+
+  .figure {
+    max-width: 420px;
+  }
+}
+
+@media (max-width: 760px) {
+  .channelList {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    border-top: none;
+    padding-top: 0;
+    padding-left: 1.25rem;
+    border-left: 1px solid var(--db-blue-30);
+  }
+
+  .channel::before {
+    display: none;
+  }
+
+  .channelNode {
+    top: 50%;
+    left: -1.25rem;
+  }
+}
+
+@media (max-width: 560px) {
+  .frame {
+    padding: 1.5rem 1.25rem 2rem;
+  }
+
+  .corner {
+    display: none;
+  }
+}

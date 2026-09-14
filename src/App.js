@@ -5,6 +5,7 @@ import './App.css';
 import Home from './components/Home/Home';
 import Layout from './components/Layout/Layout';
 
+const Welcome = lazy(() => import('./components/Welcome/Welcome'));
 const Theory = lazy(() => import('./components/Theory/Theory'));
 const Structure = lazy(() => import('./components/Structure/Structure'));
 const Simulator = lazy(() => import('./components/Simulator/Simulator'));
@@ -17,6 +18,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
+            <Route path="welcome" element={<Welcome />} />
             <Route path="theory" element={<Theory />} />
             <Route path="structure" element={<Structure />} />
             <Route path="simulator" element={<Simulator />} />
