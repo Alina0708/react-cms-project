@@ -26,3 +26,6 @@ yarn-error.log*
 /y
 /y.pub
 .vercel
+
+# BMAD personal install config (per-user answers, not shared)
+/_bmad/config.user.toml
