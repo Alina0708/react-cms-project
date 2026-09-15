@@ -3,7 +3,12 @@ import classes from './basestyle.module.css';
 import { findAnswer } from './knowledgeData';
 import { knowledgeImages } from './knowledgeImages';
 
-const Baseknow = () => {
+const SPEECH_LOCALE = { ru: 'ru-Ru', en: 'en-US' };
+const NOT_FOUND_ALT = { ru: 'что-то пошло не так..', en: 'something went wrong..' };
+
+// `getLanguage` is read fresh on every interaction (not captured once at mount),
+// so switching the site's language mid-session updates the assistant immediately.
+const Baseknow = (getLanguage = () => 'ru') => {
   let form = document.getElementById('dialog__form');
   let input = document.getElementById('dialog__input');
   let button = document.getElementById('dialog__button');
@@ -14,12 +19,13 @@ const Baseknow = () => {
   function handleForm(e) {
     if (e) e.preventDefault();
     if (input.value !== '') {
+      const language = getLanguage();
       messanger.innerHTML += `<div class=${classes.question}>${input.value}</div>`;
-      let { text, extras } = findAnswer(input.value);
+      let { text, extras } = findAnswer(input.value, language);
       messanger.innerHTML += `<div class="dialog__message answer">${text}<br/></div>`;
       extras.forEach((extra) => {
         if (knowledgeImages[extra]) {
-          messanger.innerHTML += `<img alt="что-то пошло не так.." loading="lazy" class=${classes.knowImage} src=${knowledgeImages[extra]}/>`;
+          messanger.innerHTML += `<img alt="${NOT_FOUND_ALT[language]}" loading="lazy" class=${classes.knowImage} src=${knowledgeImages[extra]}/>`;
         } else {
           messanger.innerHTML += extra;
         }
@@ -27,6 +33,7 @@ const Baseknow = () => {
       messanger.scrollTop = 99999;
 
       let utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = SPEECH_LOCALE[language];
       speechSynthesis.cancel();
       speechSynthesis.speak(utterance);
     }
@@ -58,7 +65,7 @@ const Baseknow = () => {
 
     let recognizer = new SpeechRecognition(); //webkit..
     recognizer.interimResults = true;
-    recognizer.lang = 'ru-Ru';
+    recognizer.lang = SPEECH_LOCALE[getLanguage()];
     recognizer.onresult = function (event) {
       let result = event.results[event.resultIndex];
       if (result.isFinal) {

@@ -5,6 +5,12 @@
 // Each knowledgeBase entry is a tuple: [subject, predicate, object, extra?].
 // `extra`, when present, is either a key into `knowledgeImages` (rendered as an
 // image) or literal text/HTML to append after the answer.
+//
+// The Russian matcher below parses verb endings (е́т/у́т/ю́т, etc.) to find the
+// predicate in a free-text question — that technique is specific to Russian
+// morphology and doesn't carry over to English. The English knowledge base
+// (`knowledgeBaseEn`) and matcher (`findAnswerEn`) instead use plain
+// keyword/substring overlap scoring — simpler, but language-agnostic.
 
 // псевдоокончания сказуемых (глаголов, кратких причастий и прилагательных)
 export const endings = [
@@ -61,8 +67,8 @@ export function capitalizeFirst(str) {
   return str[0].toUpperCase() + str.slice(1);
 }
 
-// главная функция, обрабатывающая запросы клиентов
-export function findAnswer(question) {
+// главная функция, обрабатывающая запросы клиентов (русский язык)
+export function findAnswerRu(question) {
   let txt = question.toLowerCase().replace(/[*_#?'",.!()[\]\\/]/g, '');
   // массив слов и знаков препинания
   let words = txt.split(' ');
@@ -152,6 +158,59 @@ export function findAnswer(question) {
   }
   if (!result) text = 'Ответ не найден';
   return { text, extras };
+}
+
+// Simple keyword-overlap matcher for English questions — English doesn't
+// inflect verbs the way the Russian matcher above assumes, so this scores
+// each knowledge-base entry by how many question words it contains instead
+// of parsing subject/predicate structure.
+const ENGLISH_STOPWORDS = new Set([
+  'what', 'when', 'where', 'which', 'who', 'whom', 'whose', 'why', 'how',
+  'the', 'and', 'for', 'are', 'was', 'were', 'been', 'being', 'does', 'did',
+  'you', 'your', 'about', 'with', 'that', 'this', 'these', 'those', 'can',
+]);
+
+function tokenize(str) {
+  return str
+    .toLowerCase()
+    .replace(/[*_#?'",.!()[\]\\/]/g, '')
+    .split(/\s+/)
+    .filter(Boolean);
+}
+
+export function findAnswerEn(question) {
+  const words = tokenize(question).filter((word) => word.length > 2 && !ENGLISH_STOPWORDS.has(word));
+
+  let best = null;
+  let bestScore = 0;
+
+  for (let j = 0; j < knowledgeBaseEn.length; j++) {
+    const [subject, predicate, object] = knowledgeBaseEn[j];
+    // Exact word-token matching, not substring — otherwise a short query word
+    // like "art" would falsely match inside an unrelated word like "charge".
+    const haystackWords = new Set(tokenize(`${subject} ${predicate} ${object}`));
+    let score = 0;
+    for (let i = 0; i < words.length; i++) {
+      if (haystackWords.has(words[i])) score++;
+    }
+    if (score > bestScore) {
+      bestScore = score;
+      best = knowledgeBaseEn[j];
+    }
+  }
+
+  if (!best || bestScore === 0) {
+    return { text: 'Answer not found', extras: [] };
+  }
+
+  const [subject, predicate, object, extra] = best;
+  const text2 = capitalizeFirst(`${subject} ${predicate} ${object}.`);
+  return { text: text2, extras: extra ? [extra] : [] };
+}
+
+// Unified entry point used by Theory.js and baseknow.js.
+export function findAnswer(question, language = 'ru') {
+  return language === 'en' ? findAnswerEn(question) : findAnswerRu(question);
 }
 
 export const knowledgeBase = [
@@ -599,4 +658,423 @@ export const knowledgeBase = [
       '≈ 6,24151⋅1018 эВ. Электро̀нво́льт (электрон-вольт, редко электроновольт; русское обозначение: эВ, международное: eV) — внесистемная единица энергии, используемая в атомной и ядерной физике, в физике элементарных частиц и в близких и родственных областях науки (биофизике, физической химии, астрофизике и т. п.)',
     ],
     ['виды энергии', 'имеются', 'следующие: механическая, внутренняя, электромагнитная, химическая'],
+];
+
+// English mirror of `knowledgeBase`, same order, for the simpler keyword matcher.
+export const knowledgeBaseEn = [
+  [
+    'electrical energy',
+    'is',
+    'the capacity of an electromagnetic field to do work under an applied voltage in the process of its generation, transmission, distribution, and consumption',
+  ],
+  ['electrical energy', 'is obtained', 'from other forms of energy and can be converted into other forms of energy'],
+  [
+    'the law of conservation of energy',
+    'means',
+    "a fundamental law of nature, established empirically, stating that for an isolated physical system a scalar physical quantity — a function of the system's parameters, called energy — can be defined, and it is conserved over time",
+  ],
+  [
+    'the work of electric current',
+    '',
+    'in a section of a circuit is proportional to the voltage across its ends and the amount of charge passing through that section: A = U ⋅ q. The work of electric current in a section of a circuit is proportional to the current, the time the charge takes to pass, and the voltage across the ends of that section: A = U ⋅ I ⋅ t',
+  ],
+  ['the formula for the work of current', 'is', ': A = U ⋅ I ⋅ t', 'A'],
+  ['the formula for the law of energy', 'is', 'E = Ep + Ek = const', 'EConst'],
+  [
+    'electric charge',
+    'is',
+    "a scalar physical quantity that determines a body's ability to be a source of electromagnetic fields and to take part in electromagnetic interaction",
+    'q2',
+  ],
+  [
+    'voltage',
+    'is',
+    'a scalar physical quantity equal to the work done by the effective electric field in moving a unit test electric charge from point A to point B',
+  ],
+  ['the unit of measurement for voltage', 'is called', 'the volt (V)'],
+  ['current', 'is', 'the rate at which electrons pass through a given point in a closed electrical circuit'],
+  ['Current', 'is measured in', 'amperes'],
+  ['the formula for current', 'is', 'I = U/R'],
+  ['circuit resistance', 'is', 'a quantity that reflects the opposition to the flow of current in an electrical circuit'],
+  ['resistance', 'is measured in', 'ohms'],
+  [
+    'circuit resistance',
+    'is calculated',
+    'by the following rules: when resistors are connected in series, their resistances add up: R = R1 + R2. When resistors are connected in parallel, their conductances — the reciprocals of their resistances — add up: 1/R = 1/R1 + 1/R2, or R = R1·R2 / (R1 + R2)',
+  ],
+  //15
+  //----------
+  ['the setup', 'consists', 'of a multimeter, a current source, the test body, and a stopwatch', 'installation'],
+  [
+    'the Joule-Lenz law',
+    'states',
+    ': the heating of a conductor or semiconductor is directly proportional to its resistance, the duration of the current, and the square of the current',
+  ],
+  [
+    'the Joule-Lenz law',
+    'is written',
+    "as: Q = I²RΔt. The quantity of heat released by a current-carrying conductor equals the product of the square of the current, the conductor's resistance, and the time the current flows",
+    'DL',
+  ],
+  ['the internal energy of a thermodynamic system', 'is measured', 'by means of heat exchange'],
+  [
+    'heat',
+    'is called',
+    'the energy that a body gains (or gives up) during heat exchange with the surrounding bodies (medium). Heat is usually denoted by the letter Q or ΔE',
+  ],
+  [
+    'internal energy',
+    'is',
+    "a term used in continuum physics, thermodynamics, and statistical physics for the part of a thermodynamic system's total energy that does not depend on the choice of reference frame and that can change within the problem being considered",
+  ],
+  //22
+  [
+    'the formula for internal energy',
+    'has',
+    'the form: U = Q + A (internal energy equals the sum of heat and work, measured in joules)',
+    'Uqa',
+  ],
+  [
+    'James Prescott Joule',
+    'is',
+    'an English physicist who made a significant contribution to the founding of thermodynamics. He experimentally confirmed the law of conservation of energy. He established the law describing the heating effect of an electric current. He calculated the speed of gas molecules and its dependence on temperature',
+    'joule',
+  ],
+  [
+    'Georg Simon Ohm',
+    'is',
+    "a German physicist. He derived theoretically and confirmed experimentally the law expressing the relationship between current, voltage, and resistance in a circuit (known as Ohm's law). The unit of electrical resistance (the ohm) is named after him",
+    'om',
+  ],
+  //25
+  [
+    'Emil Khristianovich Lenz',
+    'is',
+    'a Russian physicist of German descent, a Baltic German by origin. E. H. Lenz was one of the founders of electrical engineering. His name is tied to the discovery of the law describing the heating effect of current and the law determining the direction of induced current; professor and rector of the Imperial University of St. Petersburg (1863-1865), academician',
+    'lenz',
+  ],
+  [
+    'a power supply',
+    'is',
+    'electrical equipment designed to generate or store electrical energy, or to change its characteristics',
+  ],
+  [
+    'a multimeter',
+    'is',
+    'a multifunctional electrical measuring instrument. Its main purpose is measuring the characteristics of an electrical signal',
+  ],
+  ['a stopwatch', 'is', 'a precise instrument that displays time in fractions of a second'],
+  [
+    'a temperature sensor',
+    'is',
+    'a device that measures the temperature of an object or substance using various properties and characteristics of the body or medium being measured',
+  ],
+  //30
+  [
+    'a multimeter',
+    'performs',
+    'the following functions: measuring DC and AC voltage, measuring DC and AC current, measuring resistance, capacitance, and inductance',
+  ],
+  ['a power supply', 'performs', 'the following function: setting a constant current and voltage'],
+  ['a temperature sensor', 'performs', 'the following function: it measures temperature'],
+  ['charges', 'come in', 'two types: one is conventionally called positive, the other negative'],
+  [
+    'an electron',
+    'is',
+    'a subatomic particle whose electric charge is negative and equal in magnitude to one elementary electric charge. Electrons belong to the first generation of leptons and are usually considered fundamental particles, since they have no known components or substructure',
+  ],
+  //35
+  [
+    'temperature',
+    'is',
+    'a scalar physical quantity that characterizes a thermodynamic system and quantitatively expresses the intuitive notion of how hot or cold a body is. Living beings can perceive sensations of heat and cold directly, through their senses',
+  ],
+  [
+    'an electron',
+    'is',
+    'a subatomic particle whose electric charge is negative and equal in magnitude to one elementary electric charge. Electrons belong to the first generation of leptons and are usually considered fundamental particles, since they have no known components or substructure',
+  ],
+  [
+    'a proton',
+    'is',
+    'one of three elementary particles (along with the neutron and the electron) that ordinary matter is built from. Protons are part of atomic nuclei; the atomic number of a chemical element in the periodic table equals the number of protons in its nucleus',
+  ],
+  [
+    'a neuron',
+    'is',
+    'a heavy elementary particle with no electric charge. The neutron is a fermion and belongs to the baryon class. Neutrons and protons are the two main components of atomic nuclei; the common name for protons and neutrons is nucleons',
+  ],
+  [
+    "Ohm's law",
+    'looks',
+    'like this: I = U/R (current equals the ratio of voltage to resistance, measured in amperes)',
+  ],
+  [
+    'a neuron',
+    'is',
+    'a heavy elementary particle with no electric charge. The neutron is a fermion and belongs to the baryon class. Neutrons and protons are the two main components of atomic nuclei; the common name for protons and neutrons is nucleons',
+  ],
+  //40
+  ['Joule-Lenz', 'discovered', 'the law that quantifies the heating effect of an electric current'],
+  [
+    'Ohm',
+    'discovered',
+    "the law expressing the relationship between current, voltage, and resistance in a circuit (known as Ohm's law). The unit of electrical resistance (the ohm) is named after him",
+  ],
+  [
+    'electric current',
+    'is called',
+    'the directed (ordered) movement of particles or quasiparticles that carry electric charge',
+  ],
+  [
+    'a carrier of electric charge',
+    'can be',
+    ': in metals — electrons, in electrolytes — ions (cations and anions), in gases — ions and electrons, in a vacuum under certain conditions — electrons',
+    'In semiconductors — electrons or holes (electron-hole conduction)',
+  ],
+  [
+    'electric current',
+    'has',
+    'the following manifestations: heating of conductors (does not occur in superconductors), changes in the chemical composition of conductors (observed mainly in electrolytes), creation of a magnetic field (occurs in every conductor without exception)',
+  ],
+  //45
+  [
+    'power',
+    'is called',
+    'a scalar physical quantity characterizing the instantaneous rate of energy transfer from one physical system to another during its use, generally defined as the ratio of the energy transferred to the time of transfer',
+  ],
+  [
+    'the formula for power',
+    'has',
+    'the form: P = I × U, where I is the voltage, U is the current. It equals the product of the voltage across a section of a circuit and the current flowing through that section',
+    'slide',
+  ],
+  ['power', 'is measured in', 'watts (symbol: W) — the SI unit of power'],
+  [
+    'heating of a body from the work of current',
+    'occurs',
+    'as a result of collisions between free electrons and the atoms and ions of the body as electric current passes through the conductor',
+  ],
+  [
+    'the formula for heat',
+    'has',
+    "the form: Q = cm(t2−t1), where m is the mass of the body under study, c is the specific heat capacity, t2 is the final temperature of the body, t1 is the initial temperature of the body. This formula can also be used to find the heat released when a substance cools",
+  ],
+  //50
+  ['heat', 'is measured in', 'joules (J) — the unit of work, energy, and quantity of heat in the International System of Units (SI)'],
+  [
+    'specific heat capacity',
+    'is',
+    'the ratio of heat capacity to mass — the heat capacity of a unit mass of a substance; a physical quantity numerically equal to the amount of heat that must be supplied to a unit mass of a given substance to change its temperature by one unit',
+  ],
+  [
+    'heat capacity',
+    'is measured in',
+    'the International System of Units (SI) as J/K; specific heat capacity is measured in joules per kilogram per kelvin (J·kg⁻¹·K⁻¹)',
+  ],
+  [
+    'temperature',
+    'is measured in',
+    'degrees Celsius (symbol: °C) — a widely used unit of temperature, used in the International System of Units (SI) alongside the kelvin',
+  ],
+  ['the ampere', 'is', 'the unit of measurement for electric current'],
+  //55
+  [
+    'the volt',
+    'is called',
+    'the unit of measurement for electric potential, potential difference, voltage, and electromotive force',
+  ],
+  ['the watt', 'is called', 'the unit of power of an electric current'],
+  ['the ohm', 'is called', 'the unit of measurement for electrical resistance'],
+  ['current', 'generates', 'an alternating magnetic field, which creates an electric field in the same conductor'],
+  [
+    'the meaning of current',
+    'lies',
+    'in the number of electrons passing per unit time through a unit cross-sectional area of the conductor',
+  ],
+  //60
+  [
+    'the setup',
+    'works',
+    "as follows: once a constant voltage and current are set on the power supply, the work of the current in the circuit causes the test body to heat up. The body's temperature is monitored using a temperature sensor, and the multimeter displays the current resistance value of the sensor, from which the temperature can be calculated",
+  ],
+  [
+    'the joule differs from the newton',
+    'as follows',
+    'the newton is defined as the force that gives a mass of one kilogram an acceleration of one meter per second squared. The joule equals the work done when the point of application of a force of one newton moves a distance of one meter in the direction of the force',
+  ],
+  [
+    'the joule',
+    'shows',
+    'the amount of work needed to continuously produce one watt of power for one second',
+  ],
+  [
+    'the joule',
+    'is called',
+    'the unit of measurement for work, energy, and quantity of heat (Russian symbol: Дж; international: J)',
+  ],
+  [
+    'power supplies',
+    'are divided',
+    'into photoelectric converters (solar cells), thermoelectric converters, electromechanical power sources, MHD generators, and radioisotope power sources',
+  ],
+  //65
+  ['multimeters', 'are divided', 'into two types depending on how they display readings: analog and digital'],
+  [
+    'an analog multimeter',
+    'is called',
+    'a multifunctional electrical measuring instrument that displays readings via an analog (needle) scale',
+  ],
+  [
+    'the advantages of analog multimeters',
+    'include',
+    ': the ability to take measurements at low ambient temperatures down to -30°C, fast operation for large volumes of measurements when high precision is not required, no power consumption from a built-in source when measuring voltage and current, and instant display of signal changes over time',
+  ],
+  [
+    'the disadvantages of analog multimeters',
+    'include',
+    ': low input resistance and, as a result, high error in low-voltage measurements, and sensitivity to mechanical damage and vibration',
+  ],
+  [
+    'a digital multimeter',
+    'is called',
+    'a device characterized by high measurement accuracy and a wide range of functions. Digital instruments replaced analog ones due to the wide availability of semiconductor technology',
+  ],
+  //70
+  [
+    'the advantages of digital multimeters',
+    'include',
+    ': versatility, the highest possible measurement accuracy, and the ability to select measurement ranges automatically or manually',
+  ],
+  [
+    'the disadvantages of digital multimeters',
+    'include',
+    'the LCD display, since it depends on a battery or an external power source. When the battery is low, the display becomes dim',
+  ],
+  ['a stopwatch', 'is divided', 'into 2 types: mechanical and electronic'],
+  [
+    'a stopwatch',
+    'performs',
+    'the following function: it counts time up to 60 minutes in steps of 1/5 second. When the measured time reaches 60 minutes, the stopwatch hands automatically stop at 0 minutes 0 seconds',
+  ],
+  ['current', 'is studied', 'in the branch of physics called "Electricity and Electromagnetism"'],
+  //75
+  [
+    'the work of a current source',
+    'is',
+    'the work of forces (Coulomb and external) in moving electric charges through a section of a circuit',
+  ],
+  [
+    'an electrical circuit',
+    'is',
+    'a set of electrical devices designed to generate, transmit, and convert electrical energy, connected to each other by electrical wires',
+  ],
+  [
+    'electrical circuits',
+    'come in',
+    ', by the type of connection between elements, the following kinds: series, parallel, and series-parallel',
+  ],
+  [
+    'a series AC circuit',
+    'is called',
+    'a circuit made up of a resistor R and an inductor L connected in series; such a circuit is often called a series RL circuit. From this it follows that the current and voltage across the resistor are in phase. The voltage across the inductor leads the current by an angle of π/2',
+  ],
+  [
+    'resistance in an AC circuit',
+    'is called',
+    'reactance — the resistance of a circuit element caused by a change in current or voltage due to the inductance or capacitance of that element. The concept of reactance is similar to electrical resistance, but differs somewhat in the details',
+  ],
+  //80
+  [
+    'a series circuit',
+    'is characterized',
+    'by the fact that the same current flows through all elements. That is, if a chain consists of two resistors R1 and R2, the current flowing through each of them and through any other part of the circuit will be the same (I = I1 = I2)',
+  ],
+  [
+    'the difference between parallel and series connection of elements in a circuit',
+    'is',
+    'that in a series connection, all elements are connected to each other so that the section of the circuit containing them has no nodes. In a parallel connection, all elements in the circuit are joined at two nodes and have no connections to other nodes, unless stated otherwise',
+  ],
+  [
+    'direct current',
+    'is',
+    'current whose charged particles move in a constant direction. At every point of a conductor carrying direct current, some elementary electric charges are continuously replaced by others, exactly equal in total charge',
+  ],
+  [
+    'direct current',
+    'is',
+    'current whose charged particles move in a constant direction. At every point of a conductor carrying direct current, some elementary electric charges are continuously replaced by others, exactly equal in total charge',
+  ],
+  ["Ohm's law", 'was discovered', 'in 1826 (published in 1827) and is named after the scientist Georg Ohm'],
+  //85
+  [
+    'the joule',
+    'appeared',
+    'at the Second International Congress of Electricians, held in the year James Joule died (1889). The joule was introduced into the absolute practical electrical units as the unit of work and energy of electric current',
+  ],
+  [
+    'alternating current',
+    'is measured',
+    'as follows: select the AC voltage measurement function on the multimeter, setting the maximum measurement range. Attach the probe tips to the outlet, locating the wire inside. For alternating current, polarity does not matter. All that remains is to read the result shown on the display',
+  ],
+  [
+    'the conversion of electrical energy into heat',
+    'is determined',
+    'by the Joule-Lenz law — a physical law that quantifies the heating effect of an electric current',
+  ],
+  [
+    'the conversion of electrical energy into heat',
+    'is determined',
+    'by the Joule-Lenz law — a physical law that quantifies the heating effect of an electric current',
+  ],
+  [
+    'the quantity of heat via voltage',
+    'is found',
+    'according to the Joule-Lenz law, the quantity of heat Q in a conductor is given by the formula: Q = I × U × t, where I is the current in the conductor, U is the voltage across the ends of the conductor, and t is the time during which the current flows through the conductor',
+  ],
+  //90
+  ['in an electrical circuit, current', 'flows', 'from the positive terminal of the power supply to the negative terminal'],
+  [
+    'the quantity of heat over time',
+    'is determined',
+    'as follows: multiply the specific heat capacity of the substance by its mass and by the difference between the final and initial temperature of the substance',
+  ],
+  [
+    'the voltage of heat over time',
+    'is determined',
+    "as follows: voltage is measured using an instrument called a voltmeter. All voltmeters are denoted by the Latin letter (V), which is marked on the instrument's dial and used in schematic diagrams of the instrument",
+  ],
+  [
+    'current',
+    'is affected by',
+    "voltage and resistance, since by Ohm's law, current is directly proportional to voltage and inversely proportional to resistance",
+  ],
+  [
+    'the instrument for measuring current in a circuit',
+    'is called',
+    'the electrical measuring instrument for measuring current — the ammeter',
+  ],
+  //95
+  [
+    'the total voltage in a circuit',
+    'has',
+    'the form: U = U1 + U2 = I(R1 + R2) = IR, where R is the electrical resistance of the whole circuit',
+  ],
+  [
+    'internal energy',
+    'is found',
+    'by the formula E = cm(t2−t1). Here the quantity C = cm is called the heat capacity of the body (note — not of the substance). It is numerically equal to the amount of heat needed to heat the entire mass of the body by 1°C',
+    'E',
+  ],
+  [
+    'the formula for temperature via resistance',
+    'has',
+    'the form: T = 217/(R^0.13) − 151, where R is resistance, measured in degrees Celsius',
+  ],
+  [
+    'in 1 joule',
+    'there are',
+    '≈ 6.24151 × 10^18 eV. The electronvolt (rarely: electron-volt; Russian symbol: эВ; international: eV) is a non-SI unit of energy used in atomic and nuclear physics, particle physics, and related and adjacent fields of science (biophysics, physical chemistry, astrophysics, etc.)',
+  ],
+  ['types of energy', 'include', 'the following: mechanical, internal, electromagnetic, chemical'],
 ];

@@ -2,32 +2,13 @@ import { Link } from 'react-router-dom';
 
 import classes from './Welcome.module.css';
 import installation2 from '../../image/installation2.jpg';
-
-const channels = [
-  {
-    code: 'CH.01',
-    title: 'Теория',
-    text: 'Формулы, закон Джоуля-Ленца и база знаний с ответами на вопросы по внутренней энергии и работе электрического тока.',
-    to: '/theory',
-    cta: 'Изучить теорию',
-  },
-  {
-    code: 'CH.02',
-    title: 'Структура',
-    text: 'Подробное описание лабораторной установки: источник питания, мультиметр, секундомер и образцы проводников.',
-    to: '/structure',
-    cta: 'Посмотреть установку',
-  },
-  {
-    code: 'CH.03',
-    title: 'Симулятор',
-    text: 'Пошаговая интерактивная симуляция запуска установки, задания напряжения и тока и записи результатов измерений.',
-    to: '/simulator',
-    cta: 'Запустить симулятор',
-  },
-];
+import { useLanguage } from '../../i18n/LanguageContext';
+import { translations } from './Welcome.translations';
 
 const Welcome = () => {
+  const { language } = useLanguage();
+  const t = translations[language];
+
   return (
     <section className={classes.page}>
       <div className={classes.frame}>
@@ -38,19 +19,15 @@ const Welcome = () => {
 
         <div className={classes.hero}>
           <div className={classes.heroText}>
-            <p className={classes.tag}>Виртуальная лабораторная работа</p>
-            <h1 className={classes.title}>Внутренняя энергия и работа электрического тока</h1>
-            <p className={classes.subtitle}>
-              Изучите тепловое действие электрического тока на практике — без реального оборудования. Разберите
-              теорию, познакомьтесь с устройством лабораторной установки и проведите измерения в интерактивном
-              симуляторе.
-            </p>
+            <p className={classes.tag}>{t.tag}</p>
+            <h1 className={classes.title}>{t.title}</h1>
+            <p className={classes.subtitle}>{t.subtitle}</p>
             <div className={classes.actions}>
               <Link to="/simulator" className={classes.primaryButton}>
-                Запустить симулятор
+                {t.primaryButton}
               </Link>
               <Link to="/theory" className={classes.secondaryButton}>
-                Перейти к теории
+                {t.secondaryButton}
               </Link>
             </div>
           </div>
@@ -58,10 +35,10 @@ const Welcome = () => {
           <figure className={classes.figure}>
             <span className={`${classes.figureTick} ${classes.figureTickTl}`} aria-hidden="true" />
             <span className={`${classes.figureTick} ${classes.figureTickBr}`} aria-hidden="true" />
-            <img alt="Лабораторная установка" src={installation2} className={classes.figureImage} />
+            <img alt={t.figureAlt} src={installation2} className={classes.figureImage} />
             <figcaption className={classes.figureCaption}>
-              <span>Рис. 01</span>
-              <span>Установка</span>
+              <span>{t.figureNumber}</span>
+              <span>{t.figureCaption}</span>
             </figcaption>
           </figure>
         </div>
@@ -69,9 +46,9 @@ const Welcome = () => {
         <div className={classes.ruler} aria-hidden="true" />
 
         <div className={classes.channels}>
-          <p className={classes.channelsLabel}>Порядок работы</p>
+          <p className={classes.channelsLabel}>{t.channelsLabel}</p>
           <div className={classes.channelList}>
-            {channels.map(({ code, title, text, to, cta }) => (
+            {t.channels.map(({ code, title, text, to, cta }) => (
               <div key={to} className={classes.channel}>
                 <span className={classes.channelNode} aria-hidden="true" />
                 <span className={classes.channelCode}>{code}</span>

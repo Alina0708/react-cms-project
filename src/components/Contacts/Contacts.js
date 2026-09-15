@@ -5,27 +5,29 @@ import telegramIcon from '../../image/icons/telegramIcon.png';
 import githubIcon from '../../image/icons/githubIcon.png';
 import phoneIcon from '../../image/icons/phoneIcon.png';
 import emailIcon from '../../image/icons/emailIcon.png';
+import { useLanguage } from '../../i18n/LanguageContext';
+import { translations } from './Contacts.translations';
 
 const Contacts = () => {
+  const { language } = useLanguage();
+  const t = translations[language];
+
   return (
     <section className={classes.profile}>
       <div className={classes.aboutMe__container}>
         <div className={classes.contact}>
           <div className={classes.aboutMe}>
-            <h4>Обо мне</h4>
+            <h4>{t.aboutMeTitle}</h4>
           </div>
-          <p>
-            Студентка 3 курса 1 группы факультета информациоонных технологий Белорусского государственного
-            технологического университета
-          </p>
+          <p>{t.aboutMeText}</p>
         </div>
         <div className={classes.foto}>
           <img alt="avatar" src={avatar} />
-          <p>Севрюк Алина</p>
+          <p>{t.photoCaption}</p>
         </div>
       </div>
       <div className={classes.number}>
-        <p className={classes['communication-methods']}>Вы можете связаться со мной</p>
+        <p className={classes['communication-methods']}>{t.contactPrompt}</p>
         <div className={classes['icon-container']}>
           <div>
             <a href="tel:375295269874">

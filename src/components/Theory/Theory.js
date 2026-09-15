@@ -1,6 +1,8 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Baseknow from './baseknow';
 import { findAnswer } from './knowledgeData';
+import { useLanguage } from '../../i18n/LanguageContext';
+import { translations } from './Theory.translations';
 
 import classes from '../Theory/Theory.module.css';
 import ReactTooltip from 'react-tooltip';
@@ -22,9 +24,17 @@ import classes1 from './basestyle.module.css';
 const Theory = () => {
   const [tooltip, showTooltip] = useState(true);
   const [tooltipImg, showTooltipImg] = useState(true);
+  const { language } = useLanguage();
+  const t = translations[language];
+
+  const languageRef = useRef(language);
+  useEffect(() => {
+    languageRef.current = language;
+  }, [language]);
 
   useEffect(() => {
-    Baseknow();
+    Baseknow(() => languageRef.current);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   let i = 0;
   const OpenBase = () => {
@@ -39,22 +49,20 @@ const Theory = () => {
 
   const OpenBaseDialog = () => {
     // eslint-disable-next-line no-restricted-globals
-    confirm('Желаете задать вопрос?');
-    let question = prompt('Введите вопрос', '');
-    if (question) alert(findAnswer(question).text);
+    confirm(t.confirmPrompt);
+    let question = prompt(t.promptQuestion, '');
+    if (question) alert(findAnswer(question, language).text);
   };
 
   return (
     <section className={classes.theory}>
-      <h1 className={classes.titleSticky}>ВНУТРЕННЯЯ ЭНЕРГИЯ И РАБОТА ЭЛЕКТРИЧЕСКОГО ТОКА</h1>
+      <h1 className={classes.titleSticky}>{t.pageTitle}</h1>
       <p className={classes.indent}>
-        <span className={classes.definition}>Электрическая энергия (электроэнергия)</span>- способность
-        электромагнитного поля совершать работу под действием приложенного напряжения в технологическом процессе её
-        производства, передачи, распределения и потребления.
+        <span className={classes.definition}>{t.definitionTerm}</span>
+        {t.definitionRest}
       </p>
       <p>
-        Электрическую энергию можно получать из других видов энергии и преобразовывать в другие виды энергии. Для нее
-        справедлив{' '}
+        {t.para1Before}{' '}
         <span
           className={classes['link-tooltip']}
           data-tip="energy"
@@ -65,63 +73,59 @@ const Theory = () => {
             setTimeout(() => showTooltip(true), 50);
           }}
         >
-          закон сохранения энергии
+          {t.tooltipLabel}
         </span>
         {tooltip && (
           <ReactTooltip id="energy" place="bottom" type="dark" effect="float">
             <span>E = Ep + Ek = const</span>
           </ReactTooltip>
         )}
-        . В проводнике носители заряда движутся под действием электрического поля, а при переносе заряда совершается
-        работа.
+        {t.para1After}
       </p>
-      <p>Если:</p>
+      <p>{t.ifLabel}</p>
       <p>
-        <span className={classes.decoding}>W</span> — работа электрического тока (Дж = Вт·с),
-      </p>
-      <p>
-        <span className={classes.decoding}>U</span> — напряжение (В),
+        <span className={classes.decoding}>W</span> — {t.decodingW}
       </p>
       <p>
-        <span className={classes.decoding}>I</span> — сила тока (A),
+        <span className={classes.decoding}>U</span> — {t.decodingU}
       </p>
       <p>
-        <span className={classes.decoding}>R</span> — сопротивление цепи (Ом),
+        <span className={classes.decoding}>I</span> — {t.decodingI}
       </p>
       <p>
-        <span className={classes.decoding}>t</span> — время протекания тока (c),
+        <span className={classes.decoding}>R</span> — {t.decodingR}
       </p>
       <p>
-        <span className={classes.decoding}>Q</span> — переносимый током заряд,
+        <span className={classes.decoding}>t</span> — {t.decodingT}
       </p>
-      <p>То, работа электрического тока:</p>
+      <p>
+        <span className={classes.decoding}>Q</span> — {t.decodingQ}
+      </p>
+      <p>{t.thenWork}</p>
       <div className={classes.formule}>
         <img alt="W_UQ" className={classes.omaW2} src={W_UQ} loading="lazy" />
         <span className={classes.numberingFormule}>(1)</span>
       </div>
-      <p>
-        ,а количество электричества или электрический заряд — это произведение силы тока на время протекания тока
-        формула (2).
-      </p>
+      <p>{t.afterFormula1}</p>
       <div className={classes.formule}>
         <img alt="Q" className={classes.omaW2} src={Q} loading="lazy" />
         <span className={classes.numberingFormule}>(2)</span>
       </div>
-      <p>то получаем</p>
-      <h3>Работа электрического тока через напряжение и ток</h3>
+      <p>{t.thenWeGet}</p>
+      <h3>{t.sectionWorkViaVoltage}</h3>
       <div className={classes.formule}>
         <img alt="W" className={classes.omaW2} src={W} loading="lazy" />
         <span className={classes.numberingFormule}>(3)</span>
       </div>
       <p>
-        При подстановки закона ома &nbsp;
+        {t.substOhm} &nbsp;
         <div className={classes.formule}>
           <img alt="Oma" src={Oma} className={classes.omaW} loading="lazy" />
           <span className={classes.numberingFormule}>(4)</span>
         </div>
       </p>
       <p>
-        в формулу (3) закона Джоуля — Ленца мы получим работу электрического тока через напряжение и сопротивление:
+        {t.afterOhmSub}
         &nbsp;
         <div className={classes.formule}>
           <img alt="W_u2" src={W_u2} className={classes.omaW} loading="lazy" />
@@ -129,71 +133,47 @@ const Theory = () => {
         </div>
       </p>
       <p>
-        работа электрического тока через ток и сопротивление:
+        {t.workViaCurrent}
         <div className={classes.formule}>
           <img alt="w_i" src={w_i} className={classes.w_i} loading="lazy" />
           <span className={classes.numberingFormule}>(6)</span>
         </div>
       </p>
-      <p>Единицей работы СИ является джоуль (Дж).</p>
-      <h3>Tеплота при изменении температуры</h3>
-      <p>Внутреннюю энергию термодинамической системы можно изменить двумя способами:</p>
+      <p>{t.siUnit}</p>
+      <h3>{t.sectionHeatTemp}</h3>
+      <p>{t.internalEnergyIntro}</p>
       <ul>
-        <li>совершая над системой работу,</li>
-        <li>при помощи теплового взаимодействия.</li>
+        <li>{t.methodWork}</li>
+        <li>{t.methodHeat}</li>
       </ul>
+      <p>{t.heatTransferParagraph}</p>
       <p>
-        Передача тепла телу не связана с совершением над телом макроскопической работы. В данном случае изменение
-        внутренней энергии вызвано тем, что отдельные молекулы тела с большей температурой совершают работу над
-        некоторыми молекулами тела, которое имеет меньшую температуру. В этом случае тепловое взаимодействие реализуется
-        за счет теплопроводности. Передача энергии также возможна при помощи излучения. Система микроскопических
-        процессов (относящихся не ко всему телу, а к отдельным молекулам) называется теплопередачей. Количество энергии,
-        которое передается от одного тела к другому в результате теплопередачи, определяется количеством теплоты,
-        которое предано от одного тела другому.
+        <span className={classes.definition}>{t.heatDefinitionTerm}</span>
+        {t.heatDefinitionRest}
       </p>
-      <p>
-        <span className={classes.definition}>Теплотой</span> называют энергию, которая получается (или отдается) телом в
-        процессе теплообмена с окружающими телами (средой). Обозначается теплота, обычно буквой Q или &#x394;E.
-      </p>
-      <p>
-        Работа электрического тока вызывает повышение температуры тела от начального значения T0 до конечного значения
-        Tn. Внутренняя энергия увеличивается на величину:
-      </p>
+      <p>{t.tempRiseParagraph}</p>
       <div className={classes.formule}>
         <img alt="E" className={classes.omaW2} src={E} loading="lazy" />
         <span className={classes.numberingFormule}>(7)</span>
       </div>
-      <p>где m – масса тела,</p>
-      <p> c – удельная теплоемкость материала тела.</p>
+      <p>{t.whereM}</p>
+      <p>{t.whereC}</p>
       <br />
-      <p>
-        Чтобы максимально избежать чистого теплообмена с окружающей средой, перед началом измерения тело охлаждается до
-        начальной температуры T0, которая немного ниже комнатной.
-      </p>
-      <p>В таких условиях изменение внутренней энергии должно быть равно проделанной работе, что означает следующее:</p>
+      <p>{t.avoidHeatExchange}</p>
+      <p>{t.conditionsParagraph}</p>
       <div className={classes.formule}>
         <img alt="E_W" className={classes.omaW2} src={E_W} loading="lazy" />
         <span className={classes.numberingFormule}>(8)</span>
       </div>
-      <p>
-        Датчик температуры используется для измерения температуры T путем измерения его сопротивления, которое зависит
-        от температуры:
-      </p>
+      <p>{t.tempSensorParagraph}</p>
       <div className={classes.formule}>
         <img alt="T" src={T} className={classes.omaW} loading="lazy" />
         <span className={classes.numberingFormule}>(9)</span>
       </div>
+      <p>{t.graphParagraph}</p>
+      <h3>{t.scientistsTitle}</h3>
+      <p>{t.jouleLenzLawParagraph}</p>
       <p>
-        Измеренные таким образом температуры наносятся на график в зависимости от работы электрического тока (рис. 2.1).
-        Удельная теплоемкость материала тела можно определить по наклону прямых линий на графике.
-      </p>
-      <h3>Ученые</h3>
-      <p>
-        Закон Джо́уля — Ле́нца (3) — физический закон, дающий количественную оценку теплового действия электрического
-        тока. Установлен в 1841 году Джеймсом Джоулем и независимо от него в 1842 году Эмилием Ленцем.
-      </p>
-      <p>
-
         <span
           className={classes['link-tooltip']}
           data-tip="Joul"
@@ -204,45 +184,32 @@ const Theory = () => {
             setTimeout(() => showTooltipImg(true), 50);
           }}
         >
-          Джеймс Пре́скотт Джо́уль
-        </span>{' '}
-        (англ. James Prescott Joule; 24 декабря 1818, Солфорд, Ланкашир, Англия, Великобритания — 11 октября 1889, Сэйл,
-        Чешир, Англия, Великобритания) — английский физик, внёсший значительный вклад в становление термодинамики.
-        Обосновал на опытах закон сохранения энергии. Установил закон, определяющий тепловое действие электрического
-        тока. Вычислил скорость движения молекул газа и установил её зависимость от температуры.
+          {t.jouleTooltipLabel}
+        </span>
+        {t.jouleBioRest}
       </p>
       {tooltipImg && (
         <ReactTooltip id="Joul" place="bottom" type="dark" effect="float">
           <img className={classes['joule-tooltip']} alt="joule" src={joule} />
         </ReactTooltip>
       )}
-      <p>
-        Эмилий Христианович Ленц (при рождении Генрих Фридрих Эмиль Ленц, нем. Heinrich Friedrich Emil Lenz; 12 (24)
-        февраля 1804, Дерпт — 29 января (10 февраля) 1865[4], Рим) — российский физик немецкого происхождения. Выходец
-        из балтийских немцев. Э. Х. Ленц является одним из основоположников электротехники. С его именем связано
-        открытие закона, определяющего тепловые действия тока, и закона, определяющего направление индукционного тока,
-        профессор и ректор Императорского Санкт-Петербургского университета (1863—1865), академик.
-      </p>
+      <p>{t.lenzBio}</p>
       <div className={classes.scientists}>
         <div className={classes.scientist}>
           <img alt="joule" src={joule} loading="lazy" />
-          <em>Джеймс Прескотт Джоуль</em>
+          <em>{t.jouleCaption}</em>
         </div>
 
         <div className={classes.scientist}>
           <img alt="lenz" src={lenz} loading="lazy" />
-          <em>Эмилий Христианович Ленц</em>
+          <em>{t.lenzCaption}</em>
         </div>
       </div>
-      <p>
-        Гео́рг Си́мон Ом (нем. Georg Simon Ohm; 16 марта 1789, Эрланген — 6 июля 1854, Мюнхен) — немецкий физик. Он вывел
-        теоретически и подтвердил на опыте закон, выражающий связь между силой тока в цепи, напряжением и сопротивлением
-        (известен как закон Ома). Его именем названа единица электрического сопротивления (Ом).
-      </p>
+      <p>{t.omBio}</p>
       <div className={classes.scientists}>
         <div className={classes.scientist}>
           <img alt="Om" src={om} loading="lazy" />
-          <em>Георг Симон Ом</em>
+          <em>{t.omCaption}</em>
         </div>
       </div>
 
@@ -304,7 +271,7 @@ const Theory = () => {
 
       <section id="dialog" className={classes1.dialog}>
         <div className={classes1.dialog__window}>
-          <h4 className={classes1.dialog__header}>Помощник</h4>
+          <h4 className={classes1.dialog__header}>{t.assistantDialogTitle}</h4>
           <div className={classes1.dialog__body} id="dialog__messanger"></div>
           <form className={classes1.dialog__submit} id="dialog__form" onSubmit={() => false}>
             <input
@@ -313,7 +280,7 @@ const Theory = () => {
               type="text"
               name="question"
               autoComplete="off"
-              placeholder="Введите ваш вопрос"
+              placeholder={t.inputPlaceholder}
             />
             <button className={classes1.dialog__button} id="dialog__button" type="button">
               <i className="fas fa-microphone"></i>
@@ -330,7 +297,7 @@ const Theory = () => {
 
       <section>
         <div id="button_knowledge" onMouseDown={OpenBaseDialog} className={classes.button_knowledg_button_open1}>
-          Диалог
+          {t.openBaseDialogButtonLabel}
         </div>
       </section>
     </section>

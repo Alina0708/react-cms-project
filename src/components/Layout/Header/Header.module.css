@@ -14,6 +14,13 @@ header {
   z-index: 2;
 }
 
+.languageSlot {
+  position: absolute;
+  right: var(--space-md);
+  top: 50%;
+  transform: translateY(-50%);
+}
+
 .navMenu {
   display: flex;
   align-items: center;
@@ -71,5 +78,18 @@ header {
   }
   .activeLink {
     margin-left: 9px;
+  }
+
+  header {
+    height: auto;
+    flex-direction: column;
+    padding: 10px 0;
+    row-gap: 8px;
+  }
+
+  .languageSlot {
+    position: static;
+    transform: none;
+    order: -1;
   }
 }

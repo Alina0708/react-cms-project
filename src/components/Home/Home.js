@@ -1,22 +1,26 @@
 import classes from '../Home/Home.module.css';
 import installation1 from '../../image/installation1.jpg';
+import { useLanguage } from '../../i18n/LanguageContext';
+import { translations } from './Home.translations';
 
 const Home = () => {
-  console.log('home');
+  const { language } = useLanguage();
+  const t = translations[language];
+
   return (
     <section className={classes.term}>
       <img alt={installation1} src={installation1} className={classes.foneImage} />
       <div className={classes.centered}>
-        <p>БЕЛОРУССКИЙ ГОСУДАРСТВЕННЫЙ ТЕХНОЛОГИЧЕСКИЙ УНИВЕРСИТЕТ</p>
-        <p>Факультет Информационных Технологий</p>
-        <p>Кафедра информационных систем и технологий</p>
-        <p>Курсовой проект по дисциплине</p>
-        <p>«Компьютерные мультимедийные системы в издательском деле»</p>
-        <p>Тема курсового проекта:"Работа электрического тока»</p>
+        <p>{t.university}</p>
+        <p>{t.faculty}</p>
+        <p>{t.department}</p>
+        <p>{t.projectFor}</p>
+        <p>{t.discipline}</p>
+        <p>{t.topic}</p>
       </div>
       <div className={classes.developer}>
-        <p>Выполнила: студентка 3 курса 1 группы</p>
-        <p>Севрюк Алина Эдуардовна</p>
+        <p>{t.completedBy}</p>
+        <p>{t.author}</p>
       </div>
     </section>
   );

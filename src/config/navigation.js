@@ -1,8 +1,22 @@
-export const navItems = [
-  { to: '/', label: 'Главная' },
-  { to: '/welcome', label: 'О проекте' },
-  { to: '/theory', label: 'Теория' },
-  { to: '/structure', label: 'Структура' },
-  { to: '/simulator', label: 'Симулятор' },
-  { to: '/contacts', label: 'Контакты' },
-];
+const ROUTES = ['/', '/welcome', '/theory', '/structure', '/simulator', '/contacts'];
+
+const LABELS = {
+  ru: {
+    '/': 'Главная',
+    '/welcome': 'О проекте',
+    '/theory': 'Теория',
+    '/structure': 'Структура',
+    '/simulator': 'Симулятор',
+    '/contacts': 'Контакты',
+  },
+  en: {
+    '/': 'Home',
+    '/welcome': 'About',
+    '/theory': 'Theory',
+    '/structure': 'Structure',
+    '/simulator': 'Simulator',
+    '/contacts': 'Contacts',
+  },
+};
+
+export const getNavItems = (language) => ROUTES.map((to) => ({ to, label: LABELS[language][to] }));

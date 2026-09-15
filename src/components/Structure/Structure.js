@@ -1,7 +1,6 @@
 import { useState } from 'react';
 
 import classes from '../Structure/Structure.module.css';
-// import installation from '../../image/installation.jpg';
 import installation2 from '../../image/installation2.jpg';
 import DC_Power_Supply from '../../image/DC_Power_Supply.jpg';
 import multimetr from '../../image/multimetr.png';
@@ -10,8 +9,12 @@ import copper from '../../image/copper.jpg';
 import time from '../../image/time.jpg';
 import aluminum from '../../image/aluminum.jpg';
 import Modal from '../Modal/Modal';
+import { useLanguage } from '../../i18n/LanguageContext';
+import { translations } from './Structure.translations';
 
 const Structure = () => {
+  const { language } = useLanguage();
+  const t = translations[language];
   const imagesType = { power: power, multimetr: multimetr, copper: copper, time: time, aluminum: aluminum };
   const [displayImg, setDisplayImg] = useState({
     power: false,
@@ -31,15 +34,11 @@ const Structure = () => {
 
   return (
     <section className={classes.structure}>
-      <h1 className={classes.titleSticky}>Структура и описание установки</h1>
-      {/* <div className={classes.fotoInstallation}>
-        <img alt="installation" src={installation} />
-        <p>(Рис.1 - Изображение установки сверху)</p>
-      </div> */}
+      <h1 className={classes.titleSticky}>{t.title}</h1>
       <div className={classes.descriptionInstallation}>
         <div className={classes.fotoInstallation}>
           <img alt="installation2" src={installation2} />
-          <p>(Рис.2 - Изображение установки с прямого ракурса)</p>
+          <p>{t.installationCaption}</p>
         </div>
         <div className={classes.compound}>
           <em
@@ -49,7 +48,7 @@ const Structure = () => {
               setShow(true);
             }}
           >
-            1 — источник питания
+            {t.components.power}
           </em>
           <em
             onClick={() => {
@@ -57,7 +56,7 @@ const Structure = () => {
               setShow(true);
             }}
           >
-            2 — медное тело
+            {t.components.copper}
           </em>
           <em
             onClick={() => {
@@ -65,7 +64,7 @@ const Structure = () => {
               setShow(true);
             }}
           >
-            3 — алюминивое тело
+            {t.components.aluminum}
           </em>
           <em
             onClick={() => {
@@ -73,7 +72,7 @@ const Structure = () => {
               setShow(true);
             }}
           >
-            4 — мультиметр
+            {t.components.multimetr}
           </em>
           <em
             onClick={() => {
@@ -81,7 +80,7 @@ const Structure = () => {
               setShow(true);
             }}
           >
-            Также в ходе эксперимента нам понадобиться секундомер
+            {t.components.time}
           </em>
           {show && (
             <Modal show={show} setShow={closeImg}>
@@ -92,77 +91,50 @@ const Structure = () => {
           )}
         </div>
       </div>
-      <h1>Источник питания</h1>
+      <h1>{t.powerSupplyTitle}</h1>
       <div className={classes.componentInstallaion}>
         <img alt="DC_Power_Supply" src={DC_Power_Supply} />
         <div className={classes.power}>
-          Регулируемые импульсные источники питания с высокостабильными выходными характеристиками и ультранизкими
-          пульсациями. Цифровая индикация выходных значений напряжения и тока. Оперативный сброс выхода в ноль. Защита
-          от перегрузки, короткого замыкания, перегрева. Терморегулированная вентиляция. Минимальная дискретность
-          установки выходного напряжения и тока. Режимы работы: стабилизация U, I, динами- ческая нагрузка. Возможность
-          параллельного и последовательного соединения двух однотипных приборов. Соединение любого из полюсов с корпусом
-          (изолированный выход).
-          <p>Задавать значение силы тока можно в диапазоне от 0 до 5 A;</p>
-          <p>Задавать значение напряжения можно в диапазоне от 0 до 20 V;</p>
-          <p>Выходная мощность: 100 Вт</p>
-          <p>Стабильность при полной нагрузке ≤0,01% + 5 мВ, ≤0,2% + 5 мА</p>
-          <p>Остаточная пульсация ≤1 мВ, 3 мА</p>
-          <p>Дисплей: 2 x 3-значный светодиод</p>
-          <p>Клеммы: безопасные гнезда 4 мм</p>
-          <p>Размеры: прибл. 130x150x300 мм³</p>
-          <p>Вес: прибл. 4,7 кг</p>
+          {t.powerSupplyDescription}
+          {t.powerSupplySpecs.map((spec) => (
+            <p key={spec}>{spec}</p>
+          ))}
         </div>
       </div>
-      <h1>Мультиметр</h1>
+      <h1>{t.multimeterTitle}</h1>
       <div className={classes.componentInstallaion}>
         <img alt="multimetr" src={multimetr} className={classes.sizeImage} />
         <div className={classes.multimetr}>
-          <p>Цифровой мультиметр P1035</p>
-          <p>
-            Мультиметр – это многофункциональный электроизмерительный прибор. Основное его назначение – измерение
-            характеристик электрического сигнала. Функционально мультиметр объединяет возможности амперметра,
-            вольтметра, омметра и других электроизмерительных приборов.
-          </p>
-          <p>Основные функции мультиметра</p>
+          <p>{t.multimeterModel}</p>
+          <p>{t.multimeterDescription}</p>
+          <p>{t.multimeterFunctionsLabel}</p>
           <ul>
-            <li>измерение постоянного и переменного напряжения,</li>
-            <li>измерение постоянного и переменного тока,</li>
-            <li>измерение сопротивления, емкости и индуктивности.</li>
+            {t.multimeterFunctions.map((fn) => (
+              <li key={fn}>{fn}</li>
+            ))}
           </ul>
-          <p>Вес: прибл. 260 г</p>
-          <p>Размеры: прибл. 70x150x48 мм3</p>
-          <p>Класс безопасности: CAT III 600 В (IEC-1010-1)</p>
-          <p>Рабочее напряжение: батарея 9 В</p>
-          <p>Напряжение постоянного тока: 200 мВ − 600 В, 5 диапазонов, ±0,5% ± 2 разряда</p>
+          {t.multimeterSpecs.map((spec) => (
+            <p key={spec}>{spec}</p>
+          ))}
         </div>
       </div>
 
-      <h1 className={classes.titleSticky}>Ход работы установки</h1>
-      <p>
-        1. Для начала выполнения лабораторной работы нам необходимо нажать кнопку Power на источнике питания. Запустить
-        секундомер.
-      </p>
-      <p>2. Установить положение ручки мультиметра на режим для измерения сопротивления силы тока.</p>
-      <p>
-        3. Установить значение постоянного напряжения, нажимая на ручку постоянного напряжения. Записать значение
-        напряжение в таблицу.
-      </p>
-      <p>
-        4. Установить значение постоянного тока, нажимая на ручку постоянного тока. Записать значение тока в таблицу.
-      </p>
-      <p>5. Записать значение секундомера в таблицу.</p>
+      <h1 className={classes.titleSticky}>{t.workflowTitle}</h1>
+      {t.workflowSteps.map((step) => (
+        <p key={step}>{step}</p>
+      ))}
 
-      <h1 className={classes.titleSticky}>Дополнительные сведения</h1>
+      <h1 className={classes.titleSticky}>{t.additionalInfoTitle}</h1>
       <div>
-        Чтобы просмотреть карту установки, перейдите по ссылке
-        <a href="map/test100.html" target="_blank">
-          Open new page with map
+        {t.mapPrompt}{' '}
+        <a href="map/test100.html" target="_blank" rel="noreferrer">
+          {t.mapLink}
         </a>
       </div>
       <div>
-        Чтобы просмотреть видео работы установки, перейдите по ссылке
-        <a href="map/video_html.html" target="_blank">
-          Open new page with video
+        {t.videoPrompt}{' '}
+        <a href="map/video_html.html" target="_blank" rel="noreferrer">
+          {t.videoLink}
         </a>
       </div>
     </section>

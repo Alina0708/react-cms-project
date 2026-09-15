@@ -9,45 +9,36 @@ import photo7 from '../../image/photo7.png';
 import photo9 from '../../image/photo9.png';
 import photo10 from '../../image/photo10.png';
 import photo11 from '../../image/photo11.png';
+import { useLanguage } from '../../i18n/LanguageContext';
+import { translations } from './Simulator.translations';
 
 const Simulator = () => {
+  const { language } = useLanguage();
+  const { title, captions } = translations[language];
+
   return (
     <section>
-      <h1 className={classes.titleSticky}>Симулятор и работа с ним</h1>
+      <h1 className={classes.titleSticky}>{title}</h1>
       <div className={classes.sizeImage}>
-        <p>Установка при запуске проекта:</p>
+        <p>{captions.start}</p>
         <img alt="installation2" src={photo1} />
-        <p>Выполнение практических заданий лабораторной работы:</p>
+        <p>{captions.tasks}</p>
         <img alt="photo2" src={photo2} loading="lazy" />
-        <p>
-          При клике на кноку включения источника питания, загориться кнопка включения и на табло отобразяться
-          первоначальные значения напряжения и силы тока
-        </p>
+        <p>{captions.powerOn}</p>
         <img alt="photo3" src={photo3} loading="lazy" />
-        <p>
-          Для того, чтобы запустить работу секундомера, необходимо нажать на красную кнопку. Для паузы необходимо
-          повторно нажать на красную кнопку секундомера. Для обнуления - синюю.
-        </p>
+        <p>{captions.stopwatch}</p>
         <img alt="photo4" src={photo4} loading="lazy" />
-        <p>
-          Задаем напрядение нажав на правую ручку источника питания. Для задачи точного напряжения можно повернуть
-          среднюю ручку источника питания.
-        </p>
+        <p>{captions.voltage}</p>
         <img alt="photo5" src={photo5} loading="lazy" />
-        <p>
-          Чтобы записать значение напряжения необходимо нажать на кнопку ЗАПИСАТЬ, откроется таблица для записи значений
-        </p>
+        <p>{captions.recordVoltage}</p>
         <img alt="photo6" src={photo6} loading="lazy" />
-        <p>Устанавливаем значение постоянного тока, поворачивая правую ручку источника питания</p>
+        <p>{captions.current}</p>
         <img alt="photo7" src={photo7} loading="lazy" />
-        <p>Записываем значе</p>
+        <p>{captions.recordValue}</p>
         <img alt="photo9" src={photo9} loading="lazy" />
-        <p>
-          При успешном заполнении всех полей и нажатии на кнопку ЗАПИСЬ в таблице записи значений, появится надпись
-          «Успешная запись»
-        </p>
+        <p>{captions.successMessage}</p>
         <img alt="photo10" src={photo10} loading="lazy" />
-        <p>Таблица чтения значений. Для ее открытия не</p>
+        <p>{captions.readTable}</p>
         <img alt="photo11" src={photo11} loading="lazy" />
       </div>
     </section>
@@ -55,4 +46,3 @@ const Simulator = () => {
 };
 
 export default Simulator;
-//   <a href="../../Webgl/index.html">f</a>

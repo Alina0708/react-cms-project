@@ -20,6 +20,6 @@
 @media (max-width: 700px) {
   .content {
     width: min(100% - 24px, 620px);
-    padding-top: 92px;
+    padding-top: 150px;
   }
 }
